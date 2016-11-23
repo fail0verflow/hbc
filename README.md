@@ -42,6 +42,7 @@ Additionally, you'll need the following packages on your host machine:
 * pycryptodome (for PyWii)
 * libpng headers (libpng-dev)
 * gettext
+* sox
 
 The build process has only been tested on Linux. You're on your own if you
 want to try building this on OSX or Windows.
