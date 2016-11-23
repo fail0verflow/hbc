@@ -47,6 +47,8 @@ Additionally, you'll need the following packages on your host machine:
 The build process has only been tested on Linux. You're on your own if you
 want to try building this on OSX or Windows.
 
+You'll need the Wii common key installed as ~/.wii/common-key.
+
 First run 'make' in wiipax, then 'make' in channel. You'll find a .wad file
 that you can install or directly run with Dolphin under
 channel/title/channel_retail.wad. You'll also find executable binaries under
