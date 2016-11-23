@@ -1577,21 +1577,21 @@ class Renderer(object):
 				glEnable(texture.target)
 				glBindTexture(texture.target, texture.id)
 				if mat.Textures[0][1] == 0x0:
-					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP)
+					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
 				elif mat.Textures[0][1] == 0x1:
 					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_REPEAT)
 				elif mat.Textures[0][1] == 0x2:
 					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT)
 				else:
-					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP)
+					glTexParameteri(texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
 				if mat.Textures[0][2] == 0x0:
-					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP)
+					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 				elif mat.Textures[0][2] == 0x1:
 					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_REPEAT)
 				elif mat.Textures[0][2] == 0x2:
 					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT)
 				else:
-					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP)
+					glTexParameteri(texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 					
 				glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
 				glInterleavedArrays(GL_T4F_V4F, 0, array)
