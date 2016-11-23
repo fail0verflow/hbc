@@ -26,12 +26,12 @@ DIR_BUILD_CHAN = $(DIR_BUILD)/channel
 
 DIR_INCLUDES = $(DIR_BUILD) \
 		$(DEVKITPRO)/libogc/include \
-		$(DEVKITPRO)/3rd/include \
-		$(DEVKITPRO)/3rd/include/freetype2
+		$(DEVKITPRO)/portlibs/ppc/include \
+		$(DEVKITPRO)/portlibs/ppc/include/freetype2
 
 DIR_LIBS = \
 		$(DEVKITPRO)/libogc/lib/wii \
-		$(DEVKITPRO)/3rd/lib
+		$(DEVKITPRO)/portlibs/ppc/lib
 
 LIBS = fat wiiuse bte mxml png15 z ogc m db freetype
 
