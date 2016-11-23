@@ -1,0 +1,11 @@
+#-----------------------
+# texture			x y
+#-----------------------
+white.png			1 1
+icon_fade.png		1 0
+icon_title.png		0 0
+icon_wave1a.png		0 0
+icon_wave1b.png		0 0
+icon_wavea.png		1 0
+icon_waveb.png		1 0
+icon_shape2.png		0 0

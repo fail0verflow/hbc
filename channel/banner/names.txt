@@ -1,0 +1,9 @@
+jp=Homebrewチャンネル
+en=Homebrew Channel
+de=Homebrewkanal
+fr=Chaîne Homebrew
+sp=Canal Homebrew
+it=Canale Homebrew
+nl=Homebrewkanaal
+cn=Homebrew频道
+ko=Homebrew 채널

@@ -1,0 +1,20 @@
+#-----------------------
+# texture			x y
+#-----------------------
+abubble1.png		0 0
+abubble2.png		0 0
+abubble3.png		0 0
+abubble4.png		0 0
+abubble5.png		0 0
+abubble6.png		0 0
+bbubble1.png		0 0
+cbubble1.png		0 0
+cbubble2.png		0 0
+white.png			1 1
+banner_fade.png		1 0
+banner_title.png	0 0
+banner_wave1a.png	0 0
+banner_wave1b.png	0 0
+banner_wavea.png	1 0
+banner_waveb.png	1 0
+banner_shape2.png	0 0

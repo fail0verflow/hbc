@@ -1,0 +1,30 @@
+
+TYPE = $(notdir $(CURDIR))
+
+PNGS = $(wildcard *.png)
+TPLS = $(patsubst %.png,../build/$(TYPE)/arc/timg/%.tpl,$(PNGS))
+
+../build/data/meta/$(TYPE).bin : ../build/$(TYPE).lz77
+	@[ ! -d ../build/data/meta ] && mkdir -p ../build/data/meta || true
+	$(ADDIMD5) $< $@
+
+../build/$(TYPE).lz77 : ../build/$(TYPE).arc
+	$(LZ77) $< $@
+
+ifeq ($(TYPE),banner)
+ANIMS = ../build/$(TYPE)/arc/anim/$(TYPE)_Start.brlan ../build/$(TYPE)/arc/anim/$(TYPE)_Loop.brlan
+else
+ANIMS = ../build/$(TYPE)/arc/anim/$(TYPE).brlan
+endif
+../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS) : mk$(TYPE).py
+	@[ ! -d ../build/$(TYPE)/arc/anim ] && mkdir -p ../build/$(TYPE)/arc/anim || true
+	@[ ! -d ../build/$(TYPE)/arc/blyt ] && mkdir -p ../build/$(TYPE)/arc/blyt || true
+	python mk$(TYPE).py ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS)
+
+../build/$(TYPE).arc : $(TPLS) ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS)
+	$(ARCPACK) ../build/$(TYPE).arc ../build/$(TYPE)
+
+../build/$(TYPE)/arc/timg/%.tpl : %.png
+	@[ ! -d ../build/$(TYPE)/arc/timg ] && mkdir -p ../build/$(TYPE)/arc/timg || true
+	$(PNG2TPL) $< $@ `grep $< textures.txt | cut -f 2-`
+	

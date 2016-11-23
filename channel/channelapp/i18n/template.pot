@@ -1,0 +1,244 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-22 21:29+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: NICKNAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: source/dialogs.c:53
+msgid "no description available"
+msgstr ""
+
+# This and the following strings are dialog box "title bars"
+#: source/dialogs.c:55
+msgid "Information"
+msgstr ""
+
+#: source/dialogs.c:56
+msgid "Confirmation"
+msgstr ""
+
+#: source/dialogs.c:57
+msgid "Warning"
+msgstr ""
+
+#: source/dialogs.c:58
+msgid "Error"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:59
+msgid "Ok"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:60
+msgid "Cancel"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:61
+msgid "Yes"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:62
+msgid "No"
+msgstr ""
+
+#: source/dialogs.c:63
+msgid "Delete"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:64
+msgid "Load"
+msgstr ""
+
+#  button text
+#: source/dialogs.c:65 source/m_main.c:95
+msgid "Back"
+msgstr ""
+
+#: source/dialogs.c:66
+msgid "Options"
+msgstr ""
+
+#: source/dialogs.c:67
+msgid "Device:"
+msgstr ""
+
+#: source/dialogs.c:68
+msgid "Internal SD Slot"
+msgstr ""
+
+#: source/dialogs.c:69
+msgid "USB device"
+msgstr ""
+
+#: source/dialogs.c:70
+msgid "SDGecko Slot A"
+msgstr ""
+
+#: source/dialogs.c:71
+msgid "SDGecko Slot B"
+msgstr ""
+
+#: source/dialogs.c:72
+msgid "Sort applications by:"
+msgstr ""
+
+#: source/dialogs.c:73
+msgid "Name"
+msgstr ""
+
+#: source/dialogs.c:74
+msgid "Date"
+msgstr ""
+
+#: source/dialogs.c:110
+msgid "<YourLanguageHere> translation by <YourNickNameHere>"
+msgstr ""
+
+#: source/dialogs.c:115
+msgid "Theme:"
+msgstr ""
+
+#: source/dialogs.c:125
+#, c-format
+msgid "Version: %s"
+msgstr ""
+
+#: source/dialogs.c:126
+#, c-format
+msgid "Author: %s"
+msgstr ""
+
+#: source/loader.c:716
+msgid "Error while reading the application from the SD card"
+msgstr ""
+
+#: source/loader.c:717
+msgid "Error while receiving the application"
+msgstr ""
+
+#: source/loader.c:718
+msgid "Error uncompressing the received data"
+msgstr ""
+
+#: source/loader.c:719
+msgid "This is not a valid Wii application"
+msgstr ""
+
+#: source/loader.c:720
+msgid "This is not a usable ZIP file"
+msgstr ""
+
+#: source/loader.c:721
+msgid "Not enough memory"
+msgstr ""
+
+#: source/loader.c:763
+#, c-format
+msgid "Loading %s"
+msgstr ""
+
+#: source/loader.c:772
+#, c-format
+msgid "Receiving over USBGecko"
+msgstr ""
+
+#: source/loader.c:782
+#, c-format
+msgid "Receiving from %s"
+msgstr ""
+
+#: source/loader.c:968
+#, c-format
+msgid ""
+"Extract the received ZIP file?\n"
+"%s of free space are required."
+msgstr ""
+
+#: source/loader.c:969
+#, c-format
+msgid "WARNING: Files in '%s' will be overwritten"
+msgstr ""
+
+#: source/loader.c:970
+msgid "Error while extracting the ZIP file"
+msgstr ""
+
+#: source/main.c:250
+msgid "Do you really want to delete this application?"
+msgstr ""
+
+#: source/main.c:251
+#, c-format
+msgid "Error deleting '%s'"
+msgstr ""
+
+#: source/manage.c:518
+msgid "Extracting"
+msgstr ""
+
+#: source/m_main.c:80
+msgid "Network not initialized"
+msgstr ""
+
+#: source/m_main.c:81
+#, c-format
+msgid "Your Wii's IP is %u.%u.%u.%u"
+msgstr ""
+
+# button text
+#: source/m_main.c:97
+msgid "About"
+msgstr ""
+
+#: source/m_main.c:102
+msgid "Launch BootMii"
+msgstr ""
+
+#: source/m_main.c:106
+msgid "Exit to System Menu"
+msgstr ""
+
+#: source/m_main.c:109
+msgid "Shutdown"
+msgstr ""
+
+#: source/update.c:232
+#, c-format
+msgid ""
+"An update to the Homebrew Channel (version %s, replacing the installed "
+"version %s) is available for installation, do you want to update now?\n"
+"\n"
+"Release notes:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: source/update.c:262
+#, c-format
+msgid "Downloading Update (%u kB)"
+msgstr ""
+
+#: source/update.c:304
+msgid "Download failed"
+msgstr ""
+
+#: source/widgets.c:16
+msgid "<no description>"
+msgstr ""

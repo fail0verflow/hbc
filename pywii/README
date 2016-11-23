@@ -1,0 +1,10 @@
+Python library to deal with Wii formats.
+
+Currently has decent support for discs, partitions (including
+accessing the partition data using read() and write(), with
+caching), wads, and the structures contained within (certs,
+tiks, tmds, etc)
+
+Stuff may be broken. Some things are unfinished.
+
+It also makes breakfast.

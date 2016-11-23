@@ -1,0 +1,257 @@
+# translation of template.pot to Dutch
+# Dutch translations for PACKAGE package.
+# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# blasty
+msgid ""
+msgstr ""
+"Project-Id-Version: nederlands\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-22 21:29+0900\n"
+"PO-Revision-Date: 2008-05-21 01:17+0200\n"
+"Last-Translator: ChronoX\n"
+"Language-Team: Dutch\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: source/dialogs.c:53
+msgid "no description available"
+msgstr "Geen omschrijving beschikbaar"
+
+#: source/dialogs.c:55
+msgid "Information"
+msgstr "Informatie"
+
+#: source/dialogs.c:56
+msgid "Confirmation"
+msgstr "Bevestiging"
+
+#: source/dialogs.c:57
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: source/dialogs.c:58
+msgid "Error"
+msgstr "Error"
+
+#: source/dialogs.c:59
+msgid "Ok"
+msgstr "OK"
+
+#: source/dialogs.c:60
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: source/dialogs.c:61
+msgid "Yes"
+msgstr "Ja"
+
+#: source/dialogs.c:62
+msgid "No"
+msgstr "Nee"
+
+#: source/dialogs.c:63
+msgid "Delete"
+msgstr "Verwijder"
+
+#: source/dialogs.c:64
+msgid "Load"
+msgstr "Start"
+
+#: source/dialogs.c:65 source/m_main.c:95
+msgid "Back"
+msgstr "Terug"
+
+#: source/dialogs.c:66
+msgid "Options"
+msgstr "Opties"
+
+#: source/dialogs.c:67
+msgid "Device:"
+msgstr "Apparaat:"
+
+#: source/dialogs.c:68
+msgid "Internal SD Slot"
+msgstr "Intern SD Slot"
+
+#: source/dialogs.c:69
+msgid "USB device"
+msgstr "USB apparaat"
+
+#: source/dialogs.c:70
+msgid "SDGecko Slot A"
+msgstr "SDGecko Slot A"
+
+#: source/dialogs.c:71
+msgid "SDGecko Slot B"
+msgstr "SDGecko Slot B"
+
+#: source/dialogs.c:72
+msgid "Sort applications by:"
+msgstr "Sorteer applicaties op:"
+
+#: source/dialogs.c:73
+msgid "Name"
+msgstr "Naam"
+
+#: source/dialogs.c:74
+msgid "Date"
+msgstr "Datum"
+
+#: source/dialogs.c:110
+msgid "<YourLanguageHere> translation by <YourNickNameHere>"
+msgstr "Nederlandse vertaling door bLAStY en ChronoX"
+
+#: source/dialogs.c:115
+msgid "Theme:"
+msgstr "Thema:"
+
+#: source/dialogs.c:125
+#, c-format
+msgid "Version: %s"
+msgstr "Versie: %s"
+
+#: source/dialogs.c:126
+#, c-format
+msgid "Author: %s"
+msgstr "Auteur: %s"
+
+#: source/loader.c:716
+msgid "Error while reading the application from the SD card"
+msgstr ""
+"Er is een fout opgetreden tijdens het lezen van de applicatie van de SD kaart"
+
+#: source/loader.c:717
+msgid "Error while receiving the application"
+msgstr "Er is een fout opgetreden tijdens het ontvangen van de applicatie"
+
+#: source/loader.c:718
+msgid "Error uncompressing the received data"
+msgstr "Error tijdens het uitpakken van de ontvangen data"
+
+#: source/loader.c:719
+msgid "This is not a valid Wii application"
+msgstr "Dit is geen geldige Wii applicatie"
+
+#: source/loader.c:720
+msgid "This is not a usable ZIP file"
+msgstr "Dit is geen bruikbaar ZIP bestand"
+
+#: source/loader.c:721
+msgid "Not enough memory"
+msgstr "Niet genoeg geheugen"
+
+#: source/loader.c:763
+#, c-format
+msgid "Loading %s"
+msgstr "Bezig met laden van %s"
+
+#: source/loader.c:772
+#, c-format
+msgid "Receiving over USBGecko"
+msgstr "Ontvangen via USBGecko"
+
+#: source/loader.c:782
+#, c-format
+msgid "Receiving from %s"
+msgstr "Laden via %s"
+
+#: source/loader.c:968
+#, c-format
+msgid ""
+"Extract the received ZIP file?\n"
+"%s of free space are required."
+msgstr ""
+"Pak het ontvangen ZIP bestand uit?\n"
+"%s aan vrije ruimte is vereist."
+
+#: source/loader.c:969
+#, c-format
+msgid "WARNING: Files in '%s' will be overwritten"
+msgstr "WAARSCHUWING: Bestanden in '%s' zullen worden overschreven"
+
+#: source/loader.c:970
+msgid "Error while extracting the ZIP file"
+msgstr "Er is een fout opgetreden tijdens het uitpakken van de ZIP filee"
+
+#: source/main.c:250
+msgid "Do you really want to delete this application?"
+msgstr "Wil je echt deze applicatie verwijderen?"
+
+#: source/main.c:251
+#, c-format
+msgid "Error deleting '%s'"
+msgstr "Kon '%s' niet verwijderen"
+
+#: source/manage.c:518
+msgid "Extracting"
+msgstr "Uitpakken"
+
+#: source/m_main.c:80
+msgid "Network not initialized"
+msgstr "Netwerk niet geïnitialiseerd"
+
+#: source/m_main.c:81
+#, c-format
+msgid "Your Wii's IP is %u.%u.%u.%u"
+msgstr "IP adres: %u.%u.%u.%u"
+
+#: source/m_main.c:97
+msgid "About"
+msgstr "Info"
+
+#: source/m_main.c:102
+msgid "Launch BootMii"
+msgstr "BootMii starten"
+
+#: source/m_main.c:106
+msgid "Exit to System Menu"
+msgstr "Terug naar System Menu"
+
+#: source/m_main.c:109
+msgid "Shutdown"
+msgstr "Afsluiten"
+
+#: source/update.c:232
+#, c-format
+msgid ""
+"An update to the Homebrew Channel (version %s, replacing the installed "
+"version %s) is available for installation, do you want to update now?\n"
+"\n"
+"Release notes:\n"
+"\n"
+"%s"
+msgstr ""
+"Een update voor het Homebrew Kanaal (%s zal de huidige %s vervangen) is "
+"beschikbaar, wil je nu updaten?\n"
+"\n"
+"Release notes:\n"
+"\n"
+"%s"
+
+#: source/update.c:262
+#, c-format
+msgid "Downloading Update (%u kB)"
+msgstr "Update wordt gedownload (%u kB)"
+
+#: source/update.c:304
+msgid "Download failed"
+msgstr "Downloaden mislukt"
+
+#: source/widgets.c:16
+msgid "<no description>"
+msgstr "<geen omschrijving>"
+
+#~ msgid "Version: <unknown>"
+#~ msgstr "Versie: <onbekend>"
+
+#~ msgid "Coder: <unknown>"
+#~ msgstr "Auteur: <onbekend>"
+
+#~ msgid "Deleting"
+#~ msgstr "Verijwderen"

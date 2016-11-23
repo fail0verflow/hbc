@@ -1,0 +1,258 @@
+# translation of template.pot to Spanish
+# Spanish translations for PACKAGE package.
+# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# marcan <marcan@marcansoft.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: spanish\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-22 21:29+0900\n"
+"PO-Revision-Date: 2008-05-21 01:17+0200\n"
+"Last-Translator: marcan <marcan@marcansoft.com>\n"
+"Language-Team: Spanish\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: source/dialogs.c:53
+msgid "no description available"
+msgstr "descripción no disponible"
+
+#: source/dialogs.c:55
+msgid "Information"
+msgstr "Información"
+
+#: source/dialogs.c:56
+msgid "Confirmation"
+msgstr "Confirmación"
+
+#: source/dialogs.c:57
+msgid "Warning"
+msgstr "Advertencia"
+
+#: source/dialogs.c:58
+msgid "Error"
+msgstr "Error"
+
+#: source/dialogs.c:59
+msgid "Ok"
+msgstr "Aceptar"
+
+#: source/dialogs.c:60
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: source/dialogs.c:61
+msgid "Yes"
+msgstr "Sí"
+
+#: source/dialogs.c:62
+msgid "No"
+msgstr "No"
+
+#: source/dialogs.c:63
+msgid "Delete"
+msgstr "Eliminar"
+
+#  button text
+#: source/dialogs.c:64
+msgid "Load"
+msgstr "Cargar"
+
+#  button text
+#: source/dialogs.c:65 source/m_main.c:95
+msgid "Back"
+msgstr "Atrás"
+
+#: source/dialogs.c:66
+msgid "Options"
+msgstr "Opciones"
+
+#: source/dialogs.c:67
+msgid "Device:"
+msgstr "Dispositivo:"
+
+#: source/dialogs.c:68
+msgid "Internal SD Slot"
+msgstr "Ranura SD Interna"
+
+#: source/dialogs.c:69
+msgid "USB device"
+msgstr "Dispositivo USB"
+
+#: source/dialogs.c:70
+msgid "SDGecko Slot A"
+msgstr "SDGecko en Slot A"
+
+#: source/dialogs.c:71
+msgid "SDGecko Slot B"
+msgstr "SDGecko en Slot B"
+
+#: source/dialogs.c:72
+msgid "Sort applications by:"
+msgstr "Ordenar aplicaciones por:"
+
+#: source/dialogs.c:73
+msgid "Name"
+msgstr "Nombre"
+
+#: source/dialogs.c:74
+msgid "Date"
+msgstr "Fecha"
+
+#: source/dialogs.c:110
+msgid "<YourLanguageHere> translation by <YourNickNameHere>"
+msgstr "Traducción al español - marcan"
+
+#: source/dialogs.c:115
+msgid "Theme:"
+msgstr "Tema:"
+
+#: source/dialogs.c:125
+#, c-format
+msgid "Version: %s"
+msgstr "Versión: %s"
+
+#: source/dialogs.c:126
+#, c-format
+msgid "Author: %s"
+msgstr "Autor: %s"
+
+#: source/loader.c:716
+msgid "Error while reading the application from the SD card"
+msgstr "Error al leer la aplicación desde la tarjeta SD"
+
+#: source/loader.c:717
+msgid "Error while receiving the application"
+msgstr "Error al recibir la aplicación"
+
+#: source/loader.c:718
+msgid "Error uncompressing the received data"
+msgstr "Error al descomprimir los datos recibidos"
+
+#: source/loader.c:719
+msgid "This is not a valid Wii application"
+msgstr "Esta no es una aplicación de Wii válida"
+
+#: source/loader.c:720
+msgid "This is not a usable ZIP file"
+msgstr "Este archivo ZIP no se puede utilizar"
+
+#: source/loader.c:721
+msgid "Not enough memory"
+msgstr "Memoria insuficiente"
+
+#: source/loader.c:763
+#, c-format
+msgid "Loading %s"
+msgstr "Cargando %s"
+
+#: source/loader.c:772
+#, c-format
+msgid "Receiving over USBGecko"
+msgstr "Recibiendo por USBGecko"
+
+#: source/loader.c:782
+#, c-format
+msgid "Receiving from %s"
+msgstr "Recibiendo desde %s"
+
+#: source/loader.c:968
+#, c-format
+msgid ""
+"Extract the received ZIP file?\n"
+"%s of free space are required."
+msgstr ""
+"¿Desea extraer el archivo ZIP recibido?\n"
+"Se requiren %s de espacio libre."
+
+#: source/loader.c:969
+#, c-format
+msgid "WARNING: Files in '%s' will be overwritten"
+msgstr "AVISO: Se reemplazarán archivos en '%s'"
+
+#: source/loader.c:970
+msgid "Error while extracting the ZIP file"
+msgstr "Error al extraer el archivo ZIP"
+
+#: source/main.c:250
+msgid "Do you really want to delete this application?"
+msgstr "¿Estás seguro de que quieres eliminar esta aplicación?"
+
+#: source/main.c:251
+#, c-format
+msgid "Error deleting '%s'"
+msgstr "Error al eliminar '%s'"
+
+#: source/manage.c:518
+msgid "Extracting"
+msgstr "Extrayendo"
+
+#: source/m_main.c:80
+msgid "Network not initialized"
+msgstr "La red no se ha inicializado"
+
+#: source/m_main.c:81
+#, c-format
+msgid "Your Wii's IP is %u.%u.%u.%u"
+msgstr "La IP de tu Wii es %u.%u.%u.%u"
+
+#: source/m_main.c:97
+msgid "About"
+msgstr "Acerca de"
+
+#: source/m_main.c:102
+msgid "Launch BootMii"
+msgstr "Lanzar BootMii"
+
+#: source/m_main.c:106
+msgid "Exit to System Menu"
+msgstr "Salir al menú del sistema"
+
+#: source/m_main.c:109
+msgid "Shutdown"
+msgstr "Apagar"
+
+#: source/update.c:232
+#, c-format
+msgid ""
+"An update to the Homebrew Channel (version %s, replacing the installed "
+"version %s) is available for installation, do you want to update now?\n"
+"\n"
+"Release notes:\n"
+"\n"
+"%s"
+msgstr ""
+"Está disponible la versión %s del Canal Homebrew, que sustituye a la versión "
+"instalada (%s). ¿Quieres actualizar ahora?\n"
+"\n"
+"Notas sobre la versión:\n"
+"\n"
+"%s"
+
+#: source/update.c:262
+#, c-format
+msgid "Downloading Update (%u kB)"
+msgstr "Descargando (%u kB)"
+
+#: source/update.c:304
+msgid "Download failed"
+msgstr "Error al descargar"
+
+#: source/widgets.c:16
+msgid "<no description>"
+msgstr "<sin descripción>"
+
+#~ msgid "Version: <unknown>"
+#~ msgstr "Versión: <desconocida>"
+
+#~ msgid "Coder: <unknown>"
+#~ msgstr "Autor: <desconocido>"
+
+#~ msgid "Deleting"
+#~ msgstr "Eliminando"

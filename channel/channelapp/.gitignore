@@ -1,0 +1,10 @@
+stub.bin
+*.dol
+*.elf
+.*.swp
+dist
+build
+i18n/merge
+i18n/*.gen
+*.map
+
