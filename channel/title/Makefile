@@ -48,5 +48,5 @@ check: all
 	@$(TOOLS)/tmdinfo.py -dpki tmd.dpki certs.dpki
 
 clean:
-	rm -f retail/cetk dpki/cetk retail/tmd retail/tmd 00000000 00000001
+	rm -f retail/cetk dpki/cetk retail/tmd retail/tmd 00000000 00000001 channel_retail.wad channel_dpki.wad
 
