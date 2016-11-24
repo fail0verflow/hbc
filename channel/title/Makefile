@@ -6,8 +6,6 @@ CERTS = $(CURDIR)/dpki/certs
 DPKI_ISSUER_TIK = Root-CA00000002-XS00000006
 DPKI_ISSUER_TMD = Root-CA00000002-CP00000007
 
-INSTALLERFILES = certs.dpki certs.retail cetk.dpki cetk.retail tmd.dpki tmd.retail 00000000 00000001
-
 all: channel_retail.wad
 
 dpki: channel_dpki.wad

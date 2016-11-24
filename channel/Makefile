@@ -1,4 +1,4 @@
-.PHONY: clean installer
+.PHONY: clean
 
 all:
 	@$(MAKE) -C channelapp channel
