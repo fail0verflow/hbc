@@ -37,13 +37,13 @@ retail/tmd: tmd.template 00000000 00000001
 dpki/tmd: retail/tmd
 	@$(TOOLS)/dpkisign.py -tmd $< $@ $(CERTS) $(DPKI_ISSUER_TMD)
 
-check: all
+check: all dpki
 	@echo ===== RETAIL =====
-	@$(TOOLS)/tikinfo.py cetk.retail certs.retail
-	@$(TOOLS)/tmdinfo.py tmd.retail certs.retail
+	@$(TOOLS)/tikinfo.py retail/cetk retail/certs
+	@$(TOOLS)/tmdinfo.py retail/tmd retail/certs
 	@echo ===== DPKI =====
-	@$(TOOLS)/tikinfo.py -dpki cetk.dpki certs.dpki
-	@$(TOOLS)/tmdinfo.py -dpki tmd.dpki certs.dpki
+	@$(TOOLS)/tikinfo.py -dpki dpki/cetk dpki/certs
+	@$(TOOLS)/tmdinfo.py -dpki dpki/tmd dpki/certs
 
 clean:
 	rm -f retail/cetk dpki/cetk retail/tmd retail/tmd 00000000 00000001 channel_retail.wad channel_dpki.wad
