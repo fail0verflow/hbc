@@ -6,7 +6,7 @@
 
 from array import array
 from struct import pack, unpack
-from Crypto.Util.number import bytes_to_long, long_to_bytes
+from Cryptodome.Util.number import bytes_to_long, long_to_bytes
 
 # y**2 + x*y = x**3 + x + b
 ec_b = "\x00\x66\x64\x7e\xde\x6c\x33\x2c\x7f\x8c\x09\x23\xbb\x58\x21"+\

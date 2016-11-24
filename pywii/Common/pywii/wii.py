@@ -8,11 +8,11 @@ from struct import unpack, pack
 import os, os.path
 import sys
 
-from Crypto.Cipher import AES
-from Crypto.Hash import SHA
-from Crypto.PublicKey import RSA
-from Crypto.Util.number import bytes_to_long, long_to_bytes
-from Crypto.Signature import pkcs1_15
+from Cryptodome.Cipher import AES
+from Cryptodome.Hash import SHA
+from Cryptodome.PublicKey import RSA
+from Cryptodome.Util.number import bytes_to_long, long_to_bytes
+from Cryptodome.Signature import pkcs1_15
 
 import ec
 

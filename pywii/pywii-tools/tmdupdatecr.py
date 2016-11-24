@@ -2,7 +2,7 @@
 
 import sys, os, os.path
 import pywii as wii
-from Crypto.Hash import SHA
+from Cryptodome.Hash import SHA
 
 wii.loadkeys()
 
