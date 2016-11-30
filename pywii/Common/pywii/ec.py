@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # Copyright 2007,2008  Segher Boessenkool  <segher@kernel.crashing.org>
 # Copyright 2008  Hector Martin  <marcan@marcansoft.com>
 # Licensed under the terms of the GNU GPL, version 2
