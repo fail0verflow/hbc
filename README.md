@@ -39,7 +39,7 @@ You can download binaries of those
 
 Additionally, you'll need the following packages on your host machine:
 
-* pycryptodomeex (for PyWii)
+* pycryptodomex (for PyWii)
 * libpng headers (libpng-dev)
 * gettext
 * sox
