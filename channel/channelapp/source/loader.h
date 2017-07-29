@@ -2,6 +2,7 @@
 #define _LOADER_H_
 
 #include <unistd.h>
+#include <limits.h>
 
 #include <gctypes.h>
 
@@ -25,7 +26,7 @@ typedef struct {
 	char args[ARGS_MAX_LEN];
 	u32 args_len;
 
-	char dirname[MAXPATHLEN];
+	char dirname[PATH_MAX];
 	u32 bytes;
 } loader_result;
 

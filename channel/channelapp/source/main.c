@@ -295,7 +295,7 @@ void main_real(void) {
 	u64 frame;
 	bool exit_about;
 
-	char charbuf[MAXPATHLEN];
+	char charbuf[PATH_MAX];
 
 	load_text();
 

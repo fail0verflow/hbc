@@ -166,7 +166,7 @@ void app_entry_set_sort(app_sort sort) {
 static app_entry *app_entry_load_single (const char *dirname) {
 	app_entry *entry;
 	app_entry_type type;
-	char tmp[MAXPATHLEN + 32];
+	char tmp[PATH_MAX + 32];
 	struct stat st;
 
 	type = AET_BOOT_ELF;

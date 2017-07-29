@@ -703,8 +703,8 @@ static void * ld_load_func (void *arg) {
 // public loading function
 
 void loader_load(loader_result *result, view *sub_view, app_entry *entry) {
-	char caption[MAXPATHLEN + 32];
-	char filename[MAXPATHLEN];
+	char caption[PATH_MAX + 32];
+	char filename[PATH_MAX];
 
 	ld_load_arg ta;
 	s32 res;

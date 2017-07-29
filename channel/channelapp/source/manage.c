@@ -35,7 +35,7 @@ s32 dir_exists(char *dirname) {
 }
 
 static s32 mkdir_hier(char *dirname) {
-	char dir[MAXPATHLEN];
+	char dir[PATH_MAX];
 	size_t i;
 	s32 res;
 
@@ -84,7 +84,7 @@ static s32 rmdir_hier_iter(const char *dirname) {
 		return -1;
 	}
 
-	char newpath[MAXPATHLEN];
+	char newpath[PATH_MAX];
 
 	while ((de = readdir(d))) {
 		if (!strcmp(de->d_name, ".") || !strcmp(de->d_name, ".."))
@@ -118,7 +118,7 @@ exit:
 }
 
 static s32 rmdir_hier(const char *dirname) {
-	char buf[MAXPATHLEN];
+	char buf[PATH_MAX];
 
 	sprintf(buf, "%s/%s", app_path, dirname);
 
@@ -348,7 +348,7 @@ static bool manage_extract_zip(u8 *data, u32 data_len,
 
 	unz_file_info fi;
 	char filename[256];
-	char sd_filename[MAXPATHLEN];
+	char sd_filename[PATH_MAX];
 	char *p;
 	int fd;
 	
@@ -481,7 +481,7 @@ bool manage_run(view *sub_view, const char *dirname,
 				u8 *data, u32 data_len, u32 bytes) {
 	s32 res;
 	u32 progress = 0;
-	char caption[MAXPATHLEN];
+	char caption[PATH_MAX];
 
 	view *v;
 
