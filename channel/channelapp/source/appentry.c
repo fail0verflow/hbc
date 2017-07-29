@@ -65,7 +65,7 @@ static int cmp_app_entry (const void *p1, const void *p2) {
 	}
 
 	if (!a1->meta && !a2->meta)
-		return stricmp (a1->dirname, a2->dirname);
+		return strcasecmp (a1->dirname, a2->dirname);
 
 	if (!a1->meta && a2->meta)
 		return 1;
@@ -90,7 +90,7 @@ static int cmp_app_entry (const void *p1, const void *p2) {
 	}
 
 	if (!a1->meta->name && !a2->meta->name)
-		return stricmp (a1->dirname, a2->dirname);
+		return strcasecmp (a1->dirname, a2->dirname);
 
 	if (!a1->meta->name && a2->meta->name)
 		return 1;
@@ -98,7 +98,7 @@ static int cmp_app_entry (const void *p1, const void *p2) {
 	if (a1->meta->name && !a2->meta->name)
 		return -1;
 
-	return stricmp (a1->meta->name, a2->meta->name);
+	return strcasecmp (a1->meta->name, a2->meta->name);
 }
 
 static void app_entry_filter(app_filter filter) {
