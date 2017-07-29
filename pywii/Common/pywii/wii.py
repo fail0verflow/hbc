@@ -1501,6 +1501,8 @@ class WiiWadMaker(WiiWad):
         self.data_off = self.f.tell()
 
     def adddata(self, data, cid):
+        if self.tik.title_key is None:
+            raise Exception("Required key is not available")
         i = self.tmd.find_cr_by_cid(cid)
         cr = self.tmd.get_content_records()[i]
         cr.sha = SHA.new(data).digest()
