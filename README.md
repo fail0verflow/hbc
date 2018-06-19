@@ -34,8 +34,10 @@ libogc/libfat, and also install the following 3rd party libraries:
 * mxml
 * freetype
 
-You can download binaries of those
-[here](https://sourceforge.net/projects/devkitpro/files/portlibs/ppc/).
+You can obtain binaries of those with
+[devkitPro pacman](https://devkitpro.org/wiki/devkitPro_pacman). Simply use
+
+    sudo (dkp-)pacman -S ppc-zlib ppc-libpng ppc-mxml ppc-freetype
 
 Additionally, you'll need the following packages on your host machine:
 
