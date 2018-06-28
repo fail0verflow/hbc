@@ -68,7 +68,7 @@ void stubmain(void) {
 	write32(0x0c003004, 0);
 
 #ifndef NDEBUG
-#ifndef DEVKITFAIL
+#ifndef DKPPC
 	udelay(500 * 1000); // wait for mini - avoid EXI battle
 #endif
 	gecko_init();
@@ -86,7 +86,7 @@ void stubmain(void) {
 			write32(0x0c003000, 0xffffffff);
 
 			printf("Branching to 0x%08x\n", entry);
-#ifndef DEVKITFAIL
+#ifndef DKPPC
 			// detect failkit apps packed with the mini stub
 			if (entry & 0xc0000000) {
 				void (*ep)() = (void (*)()) entry;

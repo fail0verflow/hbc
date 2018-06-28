@@ -17,14 +17,14 @@ extern int stub_mini_elf_len;
 extern char stub_mini_elf[];
 extern int stub_mini_debug_elf_len;
 extern char stub_mini_debug_elf[];
-extern int stub_dkf_elf_len;
-extern char stub_dkf_elf[];
-extern int stub_dkf_debug_elf_len;
-extern char stub_dkf_debug_elf[];
-extern int stub_dkfc_elf_len;
-extern char stub_dkfc_elf[];
-extern int stub_dkfc_debug_elf_len;
-extern char stub_dkfc_debug_elf[];
+extern int stub_dkp_elf_len;
+extern char stub_dkp_elf[];
+extern int stub_dkp_debug_elf_len;
+extern char stub_dkp_debug_elf[];
+extern int stub_dkpc_elf_len;
+extern char stub_dkpc_elf[];
+extern int stub_dkpc_debug_elf_len;
+extern char stub_dkpc_debug_elf[];
 
 typedef struct {
 	const char *name;
@@ -35,10 +35,10 @@ typedef struct {
 static const stub_t stubs[] = {
 	{ "mini", &stub_mini_elf_len, (u8 *) stub_mini_elf },
 	{ "mini_debug", &stub_mini_debug_elf_len, (u8 *) stub_mini_debug_elf },
-	{ "devkitfail", &stub_dkf_elf_len, (u8 *) stub_dkf_elf },
-	{ "devkitfail_debug", &stub_dkf_debug_elf_len, (u8 *) stub_dkf_debug_elf },
-	{ "dkfailchannel", &stub_dkfc_elf_len, (u8 *) stub_dkfc_elf },
-	{ "dkfailchannel_debug", &stub_dkfc_debug_elf_len, (u8 *) stub_dkfc_debug_elf },
+	{ "devkitppc", &stub_dkp_elf_len, (u8 *) stub_dkp_elf },
+	{ "devkitppc_debug", &stub_dkp_debug_elf_len, (u8 *) stub_dkp_debug_elf },
+	{ "dkppcchannel", &stub_dkpc_elf_len, (u8 *) stub_dkpc_elf },
+	{ "dkppcchannel_debug", &stub_dkpc_debug_elf_len, (u8 *) stub_dkpc_debug_elf },
 	{ NULL, NULL, NULL }
 };
 

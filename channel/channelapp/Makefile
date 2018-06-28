@@ -111,7 +111,7 @@ $(TARGET_APP)_nopax.elf: $(FILES_SRC_OBJ) newrvl.ld
 	@$(CC) $(FILES_SRC_OBJ) $(LDFLAGS_APP) -o $@
 
 $(TARGET_APP).elf: $(TARGET_APP)_nopax.elf
-	@$(WIIPAX) -s devkitfail $< $@
+	@$(WIIPAX) -s devkitppc $< $@
 
 $(TARGET_CHAN).elf: $(TARGET_APP)_nopax.elf
 	@echo $(@F)

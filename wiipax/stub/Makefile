@@ -8,17 +8,17 @@ LDFLAGS += -nostartfiles -nodefaultlibs
 OBJS_COMMON = crt0.o main.o string.o sync.o elf.o time.o LzmaDec.o
 TARGET_ID =
 
-ifeq ($(DEVKITFAIL),1)
-DEFINES += -DDEVKITFAIL
+ifeq ($(DKPPC),1)
+DEFINES += -DDKPPC
 OBJS = $(OBJS_COMMON)
-LDSCRIPT = devkitfail.ld
-TARGET_ID = _dkf
+LDSCRIPT = devkitppc.ld
+TARGET_ID = _dkp
 else
-ifeq ($(DKFAILCHANNEL),1)
-DEFINES += -DDEVKITFAIL
+ifeq ($(DKPPCCHANNEL),1)
+DEFINES += -DDKPPC
 OBJS = realmode.o $(OBJS_COMMON)
 LDSCRIPT = channel.ld
-TARGET_ID = _dkfc
+TARGET_ID = _dkpc
 else
 OBJS = realmode.o plunge.o $(OBJS_COMMON)
 LDSCRIPT = realmode.ld
@@ -53,14 +53,14 @@ release:
 	$(Q)$(MAKE) clean
 	$(Q)$(MAKE) NDEBUG=1
 	$(Q)$(MAKE) NDEBUG=1 clean
-	$(Q)$(MAKE) DEVKITFAIL=1
-	$(Q)$(MAKE) DEVKITFAIL=1 clean
-	$(Q)$(MAKE) DEVKITFAIL=1 NDEBUG=1
-	$(Q)$(MAKE) DEVKITFAIL=1 NDEBUG=1 clean
-	$(Q)$(MAKE) DKFAILCHANNEL=1
-	$(Q)$(MAKE) DKFAILCHANNEL=1 clean
-	$(Q)$(MAKE) DKFAILCHANNEL=1 NDEBUG=1
-	$(Q)$(MAKE) DKFAILCHANNEL=1 NDEBUG=1 clean
+	$(Q)$(MAKE) DKPPC=1
+	$(Q)$(MAKE) DKPPC=1 clean
+	$(Q)$(MAKE) DKPPC=1 NDEBUG=1
+	$(Q)$(MAKE) DKPPC=1 NDEBUG=1 clean
+	$(Q)$(MAKE) DKPPCCHANNEL=1
+	$(Q)$(MAKE) DKPPCCHANNEL=1 clean
+	$(Q)$(MAKE) DKPPCCHANNEL=1 NDEBUG=1
+	$(Q)$(MAKE) DKPPCCHANNEL=1 NDEBUG=1 clean
 
 .PHONY: release
 
