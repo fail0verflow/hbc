@@ -115,7 +115,7 @@ $(TARGET_APP).elf: $(TARGET_APP)_nopax.elf
 
 $(TARGET_CHAN).elf: $(TARGET_APP)_nopax.elf
 	@echo $(@F)
-	@$(WIIPAX) -s dkfailchannel $< $@
+	@$(WIIPAX) -s dkppcchannel $< $@
 
 $(DIR_BUILD)/$(TARGET_STUB)_bin.o: $(TARGET_STUB).bin
 	@echo $(@F)
