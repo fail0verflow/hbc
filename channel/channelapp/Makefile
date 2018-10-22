@@ -5,9 +5,9 @@ PREFIX = $(DEVKITPPC)/bin/powerpc-eabi-
 CC = $(PREFIX)gcc
 AS = $(PREFIX)as
 OBJCOPY = $(PREFIX)objcopy
-ELF2DOL =$(DEVKITPPC)/bin/elf2dol
+ELF2DOL =$(DEVKITPRO)/tools/bin/elf2dol
 GDB = $(PREFIX)gdb
-BIN2S = $(DEVKITPPC)/bin/bin2s
+BIN2S = $(DEVKITPRO)/tools/bin/bin2s
 TARGET_STUB = stub
 TARGET_APP = channelapp
 TARGET_CHAN = channelapp-channel
@@ -33,7 +33,7 @@ DIR_LIBS = \
 		$(DEVKITPRO)/libogc/lib/wii \
 		$(DEVKITPRO)/portlibs/ppc/lib
 
-LIBS = fat wiiuse bte mxml png15 z ogc m db freetype
+LIBS = bte mxml freetype png bz2 z db fat wiiuse ogc m
 
 MACHDEP = -g -DGEKKO -mrvl -mcpu=750 -meabi -mhard-float
 CFLAGS = $(MACHDEP) -Os -Wall -DBASE_ADDR=$(BASE_ADDR) $(DIR_INCLUDES:%=-I%)

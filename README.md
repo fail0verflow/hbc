@@ -25,7 +25,7 @@ Wii, only under Dolphin (yes, this release runs under Dolphin).
 
 ## Build instructions
 
-You need DevkitPPC and libogc installed, and the DEVKITPRO/DEVKITPPC environment
+You need devkitPPC and libogc installed, and the DEVKITPRO/DEVKITPPC environment
 variables correctly set. Use the latest available versions. Make sure you have
 libogc/libfat, and also install the following 3rd party libraries:
 
@@ -34,8 +34,10 @@ libogc/libfat, and also install the following 3rd party libraries:
 * mxml
 * freetype
 
-You can download binaries of those
-[here](https://sourceforge.net/projects/devkitpro/files/portlibs/ppc/).
+You can obtain binaries of those with
+[devkitPro pacman](https://devkitpro.org/wiki/devkitPro_pacman). Simply use
+
+    sudo (dkp-)pacman -S ppc-zlib ppc-libpng ppc-mxml ppc-freetype
 
 Additionally, you'll need the following packages on your host machine:
 
