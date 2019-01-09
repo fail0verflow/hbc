@@ -405,7 +405,7 @@ bool settings_load(void) {
 	buf = NULL;
 	res = isfs_get(fn, &buf, banner_bin_size, 0, false);
 	if (res < 0) {
-		gprintf("deleting banner: %ld\n", res);
+		gprintf("deleting banner: %d\n", res);
 		ISFS_Delete(fn);
 	} else if (memcmp(buf, banner_bin, banner_bin_size)) {
 		gprintf("banner.bin mismatch, deleting\n");
@@ -422,7 +422,7 @@ bool settings_load(void) {
 	sprintf(fn, "%s/" FN_SETTINGS, titlepath);
 	res = isfs_get(fn, &buf, 0, MAX_SETTINGS_XML_SIZE, false);
 	if (res < 0) {
-		gprintf("isfs_get failed: %ld\n", res);
+		gprintf("isfs_get failed: %d\n", res);
 		return false;
 	}
 
@@ -513,7 +513,7 @@ bool settings_save(void) {
 		sprintf(fn, "%s/" FN_BANNER, titlepath);
 		res = isfs_put(fn, banner_bin, banner_bin_size);
 		if ((res < 0) && (res != -105)) {
-			gprintf("isfs_put banner failed: %ld\n", res);
+			gprintf("isfs_put banner failed: %d\n", res);
 			free(x);
 			return false;
 		}
@@ -523,7 +523,7 @@ bool settings_save(void) {
 
 	res = isfs_put(fn, x, strlen(x));
 	if (res < 0) {
-		gprintf("isfs_put xml failed: %ld\n", res);
+		gprintf("isfs_put xml failed: %d\n", res);
 		free(x);
 		sprintf(fn, "%s/" FN_BANNER, titlepath);
 		ISFS_Delete(fn);

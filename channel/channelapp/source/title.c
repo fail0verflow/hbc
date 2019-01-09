@@ -19,7 +19,7 @@ static void title_get_ngid(void) {
 
 	res = ES_GetDeviceID(&ng_id);
 	if (res < 0) {
-		gprintf("ES_GetDeviceID failed: %ld\n", res);
+		gprintf("ES_GetDeviceID failed: %d\n", res);
 	}
 }
 
@@ -29,7 +29,7 @@ static void title_get_msid(void) {
 	// check for dpki
 	ret = ES_GetDeviceCert(buf);
 	if (ret < 0) {
-		gprintf("ES_GetDeviceCert failed: %ld\n", ret);
+		gprintf("ES_GetDeviceCert failed: %d\n", ret);
 		return;
 	}
 
@@ -40,7 +40,7 @@ static void title_get_msid(void) {
 	} else if (ms_id == 2) {
 		gprintf("We're on retail\n");
 	} else {
-		gprintf("Unknown ms-id %ld?\n", ms_id);
+		gprintf("Unknown ms-id %d?\n", ms_id);
 	}
 }
 
@@ -49,13 +49,13 @@ static void title_get_title_path(void) {
 
 	res = ES_GetTitleID(&title_id);
 	if (res < 0) {
-		gprintf("ES_GetTitleID failed: %ld\n", res);
+		gprintf("ES_GetTitleID failed: %d\n", res);
 		return;
 	}
 
 	res = ES_GetDataDir(title_id, title_path);
 	if (res < 0) {
-		gprintf("ES_GetDataDir failed: %ld\n", res);
+		gprintf("ES_GetDataDir failed: %d\n", res);
 		return;
 	}
 

@@ -49,12 +49,12 @@ void i18n_set_mo(const void *mo_file) {
 		mo.hash_size = SWAB32(mo.hash_size);
 		mo.hashes = (void*)SWAB32((u32)mo.magic);
 	} else if(mo.magic != MAGIC) {
-		gprintf("i18n: bad mo file magic 0x%08lx\n",mo.magic);
+		gprintf("i18n: bad mo file magic 0x%08x\n",mo.magic);
 		return;
 	}
 
 	if(mo.revision != 0)
-		gprintf("i18n: bad mo file revision 0x%08lx\n",mo.revision);
+		gprintf("i18n: bad mo file revision 0x%08x\n",mo.revision);
 
 	mo_data = (char*)mo_file;
 	mo.source = (struct mo_entry*)(mo_data + (u32)mo.source);

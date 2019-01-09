@@ -140,7 +140,7 @@ static void * http_func (void *arg) {
 		r += sprintf (r, "Host: %s\r\n", ta->host);
 		r += sprintf (r, "Cache-Control: no-cache\r\n");
 		r += sprintf (r, "User-Agent: TheHomebrewChannel/%s Wii/%08lx"
-						" (%lu; %u; %s-%s)\r\n", CHANNEL_VERSION_STR,
+						" (%u; %u; %s-%s)\r\n", CHANNEL_VERSION_STR,
 						ng_id, ms_id, ta->sysmenu_version, ta->region,
 						ta->area);
 
@@ -177,8 +177,8 @@ static void * http_func (void *arg) {
 				break;
 			}
 
-			sscanf (line, "HTTP/1.%*u %lu", &ta->http_status);
-			sscanf (line, "Content-Length: %lu", &ta->content_length);
+			sscanf (line, "HTTP/1.%*u %u", &ta->http_status);
+			sscanf (line, "Content-Length: %u", &ta->content_length);
 
 			free (line);
 
@@ -335,21 +335,21 @@ void http_init (void) {
 	res = LWP_MutexInit (&ta_http.mutex, false);
 
 	if (res) {
-		gprintf ("error creating mutex: %ld\n", res);
+		gprintf ("error creating mutex: %d\n", res);
 		return;
 	}
 
 	res = LWP_MutexInit (&ta_http.cmutex, false);
 
 	if (res) {
-		gprintf ("error creating cmutex: %ld\n", res);
+		gprintf ("error creating cmutex: %d\n", res);
 		return;
 	}
 
 	res = LWP_CondInit (&ta_http.cond);
 
 	if (res) {
-		gprintf ("error creating cond: %ld\n", res);
+		gprintf ("error creating cond: %d\n", res);
 		return;
 	}
 
@@ -360,7 +360,7 @@ void http_init (void) {
 	gprintf("created http thread\n");
 
 	if (res) {
-		gprintf ("error creating thread: %ld\n", res);
+		gprintf ("error creating thread: %d\n", res);
 	}
 }
 

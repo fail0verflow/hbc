@@ -178,12 +178,12 @@ void config_language(void) {
 			break;
 
 		default:
-			gprintf("unsupported language %ld, defaulting to English\n",
+			gprintf("unsupported language %d, defaulting to English\n",
 					language);
 			language = CONF_LANG_ENGLISH;
 	}
 
-	gprintf("configuring language: %ld with mo file at %p\n", language, mo);
+	gprintf("configuring language: %d with mo file at %p\n", language, mo);
 	i18n_set_mo(mo);
 }
 
@@ -210,7 +210,7 @@ static void main_pre(void) {
 	title_init();
 	SYS_SetPowerCallback(power_cb);
 
-	gprintf("installing stub (%lu)\n", stub_bin_size);
+	gprintf("installing stub (%u)\n", stub_bin_size);
 
 #ifdef DEBUG_APP
 	if (stub_bin_size > 0x1800)
@@ -223,7 +223,7 @@ static void main_pre(void) {
 	*conf_magic = 0;
 
 	gprintf ("startup\n");
-	gprintf("IOS Version: IOS%ld %ld.%ld\n",
+	gprintf("IOS Version: IOS%d %d.%d\n",
 			IOS_GetVersion(), IOS_GetRevisionMajor(), IOS_GetRevisionMinor());
 
 	ISFS_Initialize();
@@ -795,7 +795,7 @@ void main_real(void) {
 				gprintf ("patch failed (%d)\n", res);
 		}
 
-		gprintf ("reloading to IOS%ld...\n", APPS_IOS_VERSION);
+		gprintf ("reloading to IOS%d...\n", APPS_IOS_VERSION);
 		__IOS_LaunchNewIOS(APPS_IOS_VERSION);
 
 		if (ahb_access) {

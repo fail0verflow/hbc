@@ -112,7 +112,7 @@ void m_main_theme_reinit(void) {
 				  CHANNEL_VERSION_STR, view_width / 3 - 32, FA_RIGHT,
 				  FA_ASCENDER, FONT_LABEL);
 
-	sprintf(buffer, "IOS%ld v%ld.%ld", IOS_GetVersion(), IOS_GetRevisionMajor(),
+	sprintf(buffer, "IOS%d v%d.%d", IOS_GetVersion(), IOS_GetRevisionMajor(),
 			IOS_GetRevisionMinor());
 
 	widget_label (&v_m_main->widgets[6], view_width / 3 * 2 - 16,

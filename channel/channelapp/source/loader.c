@@ -211,7 +211,7 @@ static void * ld_tcp_func (void *arg) {
 				res = net_init_async(NULL, NULL);
 
 				if (res) {
-					gprintf("net_init_async failed: %ld\n", res);
+					gprintf("net_init_async failed: %d\n", res);
 					break;
 				}
 
@@ -228,7 +228,7 @@ static void * ld_tcp_func (void *arg) {
 				}
 
 				if ((res == -EAGAIN) || (res == -ETIMEDOUT)) {
-					gprintf ("net_init failed: %ld, trying again...\n", res);
+					gprintf ("net_init failed: %d, trying again...\n", res);
 					retries--;
 					usleep(50 * 1000);
 					continue;
@@ -238,12 +238,12 @@ static void * ld_tcp_func (void *arg) {
 			}
 
 			if (res < 0) {
-				gprintf ("net_init failed: %ld\n", res);
+				gprintf ("net_init failed: %d\n", res);
 				ta->state = LDTCPS_UNINITIALIZED;
 				continue;
 			}
 
-			gprintf ("net_init success: %ld\n", res);
+			gprintf ("net_init success: %d\n", res);
 
 			mask = net_gethostip () & 0xffff0000;
 
@@ -296,7 +296,7 @@ static void * ld_tcp_func (void *arg) {
 			}
 
 			if ((sa.sin_addr.s_addr & 0xffff0000) != mask) {
-				gprintf ("non local ip (%lx)\n", sa.sin_addr.s_addr);
+				gprintf ("non local ip (%x)\n", sa.sin_addr.s_addr);
 				net_close (sn);
 				continue;
 			}
@@ -333,12 +333,12 @@ static void * ld_tcp_func (void *arg) {
 		gprintf ("net_shutdown\n");
 		res = net_shutdown (s, 2);
 		if (res)
-			gprintf ("net_shutdown failed: %ld\n", res);
+			gprintf ("net_shutdown failed: %d\n", res);
 
 		gprintf ("net_close\n");
 		res = net_close (s);
 		if (res)
-			gprintf ("net_close failed: %ld\n", res);
+			gprintf ("net_close failed: %d\n", res);
 	}
 
 	gprintf ("tcp thread deiniting\n");
@@ -588,7 +588,7 @@ static void * ld_load_func (void *arg) {
 			block = read (ta->fd, d, block);
 
 			if (block < 0) {
-				gprintf ("read failed: %ld\n", block);
+				gprintf ("read failed: %d\n", block);
 				close (ta->fd);
 
 				LWP_MutexLock (ta->mutex);
@@ -683,7 +683,7 @@ static void * ld_load_func (void *arg) {
 		}
 
 		if (len != ta->data_len_un) {
-			gprintf("short uncompress: %lu\n", (u32) len);
+			gprintf("short uncompress: %u\n", (u32) len);
 
 			LWP_MutexLock (ta->mutex);
 			ta->state = LDS_ERR_UNCOMPRESS;
@@ -812,7 +812,7 @@ void loader_load(loader_result *result, view *sub_view, app_entry *entry) {
 	res = LWP_MutexInit (&ta.mutex, false);
 
 	if (res) {
-		gprintf ("error creating mutex: %ld\n", res);
+		gprintf ("error creating mutex: %d\n", res);
 		blob_free (ta.data);
 		blob_free (ta.data_un);
 		if (ta.cmd == LDC_TCP)
@@ -826,7 +826,7 @@ void loader_load(loader_result *result, view *sub_view, app_entry *entry) {
 							LD_THREAD_STACKSIZE, LD_THREAD_PRIO);
 
 	if (res) {
-		gprintf ("error creating thread: %ld\n", res);
+		gprintf ("error creating thread: %d\n", res);
 		blob_free (ta.data);
 		blob_free (ta.data_un);
 		if (ta.cmd == LDC_TCP)
@@ -973,7 +973,7 @@ bool loader_handle_zip_app(loader_result *result, view *sub_view) {
 		sprintf(buf2, "%.02f MB",
 				(float)(result->bytes) / (float)(1024 * 1024));
 	else
-		sprintf(buf2, "%lu KB", result->bytes / 1024u);
+		sprintf(buf2, "%u KB", result->bytes / 1024u);
 	sprintf(buf, text_extract_zip, buf2);
 
 	if (!app_entry_get_path(buf2)) {

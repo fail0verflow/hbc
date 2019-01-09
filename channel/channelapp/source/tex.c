@@ -12,7 +12,7 @@
 #include "tex.h"
 #include "panic.h"
 
-#define SCREENSHOT_FILENAME "/hbc-%03lu.png"
+#define SCREENSHOT_FILENAME "/hbc-%03u.png"
 
 static u32 screenshot_index = 0;
 
