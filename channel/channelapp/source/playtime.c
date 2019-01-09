@@ -21,7 +21,7 @@ void playtime_destroy(void) {
 
 	pt_fd = IOS_Open(_playtime_path, IPC_OPEN_RW);
 	if(pt_fd < 0) {
-		gprintf("playtime open failed: %ld\n", pt_fd);
+		gprintf("playtime open failed: %d\n", pt_fd);
 		return;
 	}
 
@@ -30,7 +30,7 @@ void playtime_destroy(void) {
 	res = IOS_Write(pt_fd, &pt_buf, sizeof(pt_buf));
 	if (res != sizeof(pt_buf)) {
 		IOS_Close(pt_fd);
-		gprintf("error destroying playtime (%ld)\n", res);
+		gprintf("error destroying playtime (%d)\n", res);
 		return;
 	}
 

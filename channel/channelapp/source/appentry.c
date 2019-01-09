@@ -530,14 +530,14 @@ void app_entry_init(void) {
 	res = LWP_MutexInit (&ta_ae.cmutex, false);
 
 	if (res) {
-		gprintf ("error creating cmutex: %ld\n", res);
+		gprintf ("error creating cmutex: %d\n", res);
 		return;
 	}
 
 	res = LWP_CondInit (&ta_ae.cond);
 
 	if (res) {
-		gprintf ("error creating cond: %ld\n", res);
+		gprintf ("error creating cond: %d\n", res);
 		return;
 	}
 
@@ -546,7 +546,7 @@ void app_entry_init(void) {
 							APPENTRY_THREAD_STACKSIZE, APPENTRY_THREAD_PRIO);
 
 	if (res) {
-		gprintf("error creating thread: %ld\n", res);
+		gprintf("error creating thread: %d\n", res);
 	}
 }
 

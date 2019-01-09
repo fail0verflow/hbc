@@ -320,7 +320,7 @@ font_glyph *font_get_char(font_id id, int codepoint)
 	glyph->valid = 1;
 
 	//gprintf("FONT: Rendered and cached glyph %d (%s) at pos %d size %dx%d\n", codepoint, utf8(codepoint), glyph-font->glyphs, cw, ch);
-	//gprintf("Free MEM1: %ld MEM2: %ld\n", SYS_GetArena1Size(), SYS_GetArena2Size());
+	//gprintf("Free MEM1: %d MEM2: %d\n", SYS_GetArena1Size(), SYS_GetArena2Size());
 	return glyph;
 }
 
@@ -332,7 +332,7 @@ void font_kern(font_id id, int left, int right, FT_Pos *dx, FT_Pos *dy)
 	}
 	if (FT_Get_Kerning(fonts[id]->face, left, right, FT_KERNING_UNFITTED, &delta))
 		return;
-	//gprintf("Kern font %d for glyphs %d,%d is %ld,%ld\n", id, left, right, delta.x, delta.y);
+	//gprintf("Kern font %d for glyphs %d,%d is %d,%d\n", id, left, right, delta.x, delta.y);
 	*dx += delta.x;
 	*dy += delta.y;
 }

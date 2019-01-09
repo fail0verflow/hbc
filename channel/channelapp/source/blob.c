@@ -47,7 +47,7 @@ void *blob_alloc(size_t size)
 
 	SYS_SetArena2Hi((void*)addr);
 	_CPU_ISR_Restore(level);
-	gprintf("allocated blob size %d at 0x%08lx\n", size, addr);
+	gprintf("allocated blob size %d at 0x%08x\n", size, addr);
 	return (void*)addr;
 }
 

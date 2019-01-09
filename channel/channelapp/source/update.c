@@ -150,7 +150,7 @@ bool update_busy(bool *update_available) {
 								UPDATE_THREAD_PRIO);
 
 		if (res) {
-			gprintf("error creating thread: %ld\n", res);
+			gprintf("error creating thread: %d\n", res);
 			LWP_CloseQueue(update_queue);
 			free(update_data);
 			return false;

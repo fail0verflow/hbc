@@ -247,7 +247,7 @@ bool manage_check_zip_theme(u8 *data, u32 data_len) {
 	unz_global_info gi;
 
 	if (data_len > MAX_THEME_ZIP_SIZE) {
-		gprintf("theme size too big: %lu\n", data_len);
+		gprintf("theme size too big: %u\n", data_len);
 		return false;
 	}
 
@@ -489,7 +489,7 @@ bool manage_run(view *sub_view, const char *dirname,
 
 	res = LWP_MutexInit(&ta.mutex, false);
 	if (res) {
-		gprintf ("error creating mutex: %ld\n", res);
+		gprintf ("error creating mutex: %d\n", res);
 		return false;
 	}
 
@@ -507,7 +507,7 @@ bool manage_run(view *sub_view, const char *dirname,
 							MANAGE_THREAD_STACKSIZE, MANAGE_THREAD_PRIO);
 
 	if (res) {
-		gprintf ("error creating thread: %ld\n", res);
+		gprintf ("error creating thread: %d\n", res);
 		LWP_CloseQueue(manage_queue);
 		return false;
 	}

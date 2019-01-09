@@ -82,7 +82,7 @@ static bool reloc_dol (entry_point *ep, const u8 *addr, u32 size,
 		if (!dolfile->text_size[i])
 			continue;
 
-		gprintf ("loading text section %lu @ 0x%08lx (0x%08lx bytes)\n", i,
+		gprintf ("loading text section %u @ 0x%08x (0x%08x bytes)\n", i,
 					dolfile->text_start[i], dolfile->text_size[i]);
 
 		if (dolfile->text_pos[i] + dolfile->text_size[i] > size)
@@ -106,7 +106,7 @@ static bool reloc_dol (entry_point *ep, const u8 *addr, u32 size,
 		if (!dolfile->data_size[i])
 			continue;
 
-		gprintf ("loading data section %lu @ 0x%08lx (0x%08lx bytes)\n", i,
+		gprintf ("loading data section %u @ 0x%08x (0x%08x bytes)\n", i,
 					dolfile->data_start[i], dolfile->data_size[i]);
 
 		if (dolfile->data_pos[i] + dolfile->data_size[i] > size)
@@ -176,12 +176,12 @@ static bool reloc_elf (entry_point *ep, const u8 *addr, u32 size,
 	for(i=0;i<ehdr->e_phnum;i++) {
 
 		if(phdrs[i].p_type != PT_LOAD) {
-			gprintf("skip PHDR %d of type %ld\n", i, phdrs[i].p_type);
+			gprintf("skip PHDR %d of type %d\n", i, phdrs[i].p_type);
 		} else {
 			phdrs[i].p_paddr &= 0x3FFFFFFF;
 			phdrs[i].p_paddr |= 0x80000000;
 
-			gprintf ("PHDR %d 0x%08lx [0x%lx] -> 0x%08lx [0x%lx] <", i,
+			gprintf ("PHDR %d 0x%08x [0x%x] -> 0x%08x [0x%x] <", i,
 			         phdrs[i].p_offset, phdrs[i].p_filesz,
 			         phdrs[i].p_paddr, phdrs[i].p_memsz);
 
@@ -204,7 +204,7 @@ static bool reloc_elf (entry_point *ep, const u8 *addr, u32 size,
 					gprintf ("-> failed overlap check\n");
 					return false;
 				}
-				gprintf ("-> load 0x%lx\n", phdrs[i].p_filesz);
+				gprintf ("-> load 0x%x\n", phdrs[i].p_filesz);
 				image = (u8 *) (addr + phdrs[i].p_offset);
 				memmove ((void *) phdrs[i].p_paddr, (const void *) image,
 				         phdrs[i].p_filesz);

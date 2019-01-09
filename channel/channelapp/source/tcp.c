@@ -22,7 +22,7 @@ s32 tcp_socket (void) {
 
 	s = net_socket (PF_INET, SOCK_STREAM, 0);
 	if (s < 0) {
-		gprintf ("net_socket failed: %ld\n", s);
+		gprintf ("net_socket failed: %d\n", s);
 		return s;
 	}
 
@@ -31,14 +31,14 @@ s32 tcp_socket (void) {
 
 	res = net_fcntl (s, F_GETFL, 0);
 	if (res < 0) {
-		gprintf ("F_GETFL failed: %ld\n", res);
+		gprintf ("F_GETFL failed: %d\n", res);
 		net_close (s);
 		return res;
 	}
 
 	res = net_fcntl (s, F_SETFL, res | 4);
 	if (res < 0) {
-		gprintf ("F_SETFL failed: %ld\n", res);
+		gprintf ("F_SETFL failed: %d\n", res);
 		net_close (s);
 		return res;
 	}
@@ -91,7 +91,7 @@ s32 tcp_connect (char *host, u16 port) {
 				continue;
 			}
 
-			gprintf ("net_connect failed: %ld\n", res);
+			gprintf ("net_connect failed: %d\n", res);
 			net_close (s);
 
 			return res;
@@ -119,14 +119,14 @@ s32 tcp_listen (u16 port, s32 backlog) {
 
 	res = net_bind (s, (struct sockaddr *) &sa, sizeof (struct sockaddr_in));
 	if (res < 0) {
-		gprintf ("net_bind failed: %ld\n", res);
+		gprintf ("net_bind failed: %d\n", res);
 		net_close (s);
 		return res;
 	}
 
 	res = net_listen (s, backlog);
 	if (res < 0) {
-		gprintf ("net_listen failed: %ld\n", res);
+		gprintf ("net_listen failed: %d\n", res);
 		net_close (s);
 		return res;
 	}
@@ -157,7 +157,7 @@ char * tcp_readln (s32 s, u16 max_length, s64 start_time, u16 timeout) {
 		}
 
 		if (res < 0) {
-			gprintf ("tcp_readln failed: %ld\n", res);
+			gprintf ("tcp_readln failed: %d\n", res);
 
 			break;
 		}
@@ -215,7 +215,7 @@ bool tcp_read (s32 s, u8 *buffer, u32 length, const mutex_t *mutex, u32 *progres
 		}
 
 		if (res < 0) {
-			gprintf ("net_read failed: %ld\n", res);
+			gprintf ("net_read failed: %d\n", res);
 
 			break;
 		}
@@ -272,7 +272,7 @@ bool tcp_write (s32 s, const u8 *buffer, u32 length, const mutex_t *mutex,
 		}
 
 		if (res < 0) {
-			gprintf ("net_write failed: %ld\n", res);
+			gprintf ("net_write failed: %d\n", res);
 			break;
 		}
 

@@ -299,7 +299,7 @@ static void theme_load(u8 *data, u32 data_len) {
 			} else {
 				u16 w, h;
 
-				gprintf("loading from theme: %s (%lu @%lu)\n", filename,
+				gprintf("loading from theme: %s (%u @%u)\n", filename,
 						(u32) fi.uncompressed_size, index);
 
 				if (ws) {
@@ -374,7 +374,7 @@ void theme_init(u8 *data, u32 data_len) {
 			res = isfs_get(fn, &data, 0, MAX_THEME_ZIP_SIZE, true);
 			if (res > 0) {
 				data_len = res;
-				gprintf("theme loaded from nand (%lu bytes)\n", data_len);
+				gprintf("theme loaded from nand (%u bytes)\n", data_len);
 				theme_load(data, data_len);
 			}
 		}
@@ -387,10 +387,10 @@ void theme_init(u8 *data, u32 data_len) {
 	}
 
 	gprintf("theme.description=%s\n", theme.description);
-	gprintf("theme.progress ul=0x%08lx\n", theme.progress.ul);
-	gprintf("theme.progress ur=0x%08lx\n", theme.progress.ur);
-	gprintf("theme.progress lr=0x%08lx\n", theme.progress.lr);
-	gprintf("theme.progress ll=0x%08lx\n", theme.progress.ll);
+	gprintf("theme.progress ul=0x%08x\n", theme.progress.ul);
+	gprintf("theme.progress ur=0x%08x\n", theme.progress.ur);
+	gprintf("theme.progress lr=0x%08x\n", theme.progress.lr);
+	gprintf("theme.progress ll=0x%08x\n", theme.progress.ll);
 	gprintf("theme.langs=0x%x\n", theme.langs);
 
 	for (i = 0; i < THEME_LAST; ++i) {
