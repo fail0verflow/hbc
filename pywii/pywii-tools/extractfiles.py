@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -11,8 +11,8 @@ def parseint(d):
 	return int(d)
 
 if len(sys.argv) < 4 or len(sys.argv) > 7:
-	print "Usage:"
-	print " python %s <encrypted ISO> <partition number> <root path to extract to> "%sys.argv[0]
+	print("Usage:")
+	print(" python %s <encrypted ISO> <partition number> <root path to extract to> "%sys.argv[0])
 	sys.exit(1)
 
 iso_name, partno, data_name = sys.argv[1:4]
@@ -27,19 +27,19 @@ if len(sys.argv) == 6:
 	copy_length = parseint(sys.argv[5])
 
 if copy_length is not None and copy_length < 0:
-	print "Error: negative copy length"
+	print("Error: negative copy length")
 	sys.exit(1)
 
 disc = wii.WiiDisc(iso_name)
 disc.showinfo()
 part = wii.WiiCachedPartition(disc, partno, cachesize=32, debug=False, checkhash=False)
 if part_offset >= part.data_bytes:
-	print "Error: Offset past end of partition"
+	print("Error: Offset past end of partition")
 	sys.exit(1)
 if copy_length is None:
 	copy_length = part.data_bytes - part_offset
 if copy_length > (part.data_bytes - part_offset):
-	print "Error: Length too large"
+	print("Error: Length too large")
 	sys.exit(1)
 	
 dataf = open(data_name, "wb")
@@ -49,7 +49,7 @@ while left > 0:
 	blocklen = min(left, 4*1024*1024)
 	d = part.read(offset, blocklen)
 	if len(d) != blocklen:
-		print "Part EOF reached!"
+		print("Part EOF reached!")
 		sys.exit(1)
 	dataf.write(d)
 	offset += blocklen

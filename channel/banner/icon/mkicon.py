@@ -111,7 +111,7 @@ brlyt.RootPane.Add(tit)
 
 brldata = brlyt.Pack()
 
-open(sys.argv[1],"w").write(brldata)
+open(sys.argv[1],"wb").write(brldata)
 
 
 brlan = Brlan()
@@ -177,6 +177,6 @@ brlan.Anim['shadow'][Brlan.A_COORD][Brlan.C_X].repsimple(0, 960, 2, -45, -0.1, 4
 
 bradata = brlan.Pack(60*16)
 for a,b,c in brlan.Anim['waveb'][Brlan.A_COORD][Brlan.C_X].Triplets:
-	print a,b,c
+	print(a,b,c)
 
-open(sys.argv[2],"w").write(bradata)
+open(sys.argv[2],"wb").write(bradata)

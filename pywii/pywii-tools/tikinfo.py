@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -17,12 +17,12 @@ certs = None
 if len(args) > 0:
 	certs, certlist = wii.parse_certs(open(args.pop(0), "rb").read())
 
-print "ETicket file %s:"%tikfile
+print("ETicket file %s:"%tikfile)
 tik = wii.WiiTik(open(tikfile, "rb").read())
 tik.showinfo(" ")
 if certs is not None:
 	tik.showsig(certs," ")
-	print "Certificates:"
+	print("Certificates:")
 	for cert in certlist:
 		cert.showinfo(" - ")
 		cert.showsig(certs,"    ")

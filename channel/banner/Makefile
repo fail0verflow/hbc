@@ -14,14 +14,14 @@ export ALAMEDA := $(CURDIR)/../../pywii/Alameda
 export PNG2TPL := $(CURDIR)/tools/png2tpl$(EXE)
 export MKBNS := $(CURDIR)/tools/mkbns$(EXE)
 export LZ77 := $(CURDIR)/tools/lz77$(EXE)
-export ADDIMD5 := python2 $(CURDIR)/tools/addimd5.py
-export ARCPACK := python2 $(PYWII)/arcpack.py
+export ADDIMD5 := python3 $(CURDIR)/tools/addimd5.py
+export ARCPACK := python3 $(PYWII)/arcpack.py
 export SOX := sox
 
 all: channel.imet
 
 channel.imet: build/data.arc names.txt tools/join-imet.py
-	python2 tools/join-imet.py $@ build/data.arc build/icon.arc build/banner.arc build/sound.bns names.txt
+	python3 tools/join-imet.py $@ build/data.arc build/icon.arc build/banner.arc build/sound.bns names.txt
 
 build/data.arc : build/data/meta/icon.bin build/data/meta/banner.bin build/data/meta/sound.bin
 	$(ARCPACK) $@ build/data
@@ -45,9 +45,9 @@ build/%.raw : sound/%.wav
 	$(SOX) $< -r 32000 -c 2 -e signed-integer -b 16 -t raw $@
 
 testi : channel.imet
-	python2 $(ALAMEDA)/Alameda.py channel.imet icon
+	python3 $(ALAMEDA)/Alameda.py channel.imet icon
 testb : channel.imet
-	python2 $(ALAMEDA)/Alameda.py channel.imet banner
+	python3 $(ALAMEDA)/Alameda.py channel.imet banner
 
 $(PNG2TPL): tools/*.c
 	$(MAKE) -C tools png2tpl$(EXE)

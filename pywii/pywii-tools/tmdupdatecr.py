@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -14,7 +14,7 @@ args = sys.argv[1:]
 tmdfile = args.pop(0)
 indir = args.pop(0)
 
-print "updating content records of TMD file %s" % tmdfile
+print("updating content records of TMD file %s" % tmdfile)
 tmd = wii.WiiTmd(open(tmdfile, "rb").read())
 
 for i, cr in enumerate(tmd.get_content_records()):

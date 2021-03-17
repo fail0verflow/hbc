@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
 
 def hexdump(s):
-	return ' '.join(map(lambda x: "%02x"%x,map(ord,s)))
+	return ' '.join(["%02x"%x for x in list(map(ord,s))])
 
 isofile = sys.argv[1]
 disc = WiiDisc(isofile)

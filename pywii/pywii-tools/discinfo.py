@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -11,7 +11,7 @@ disc.showinfo()
 
 partitions = disc.read_partitions()
 
-parts = range(len(partitions))
+parts = list(range(len(partitions)))
 
 try:
 	pnum = int(sys.argv[2])

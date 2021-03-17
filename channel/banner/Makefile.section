@@ -19,7 +19,7 @@ endif
 ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS) : mk$(TYPE).py
 	@[ ! -d ../build/$(TYPE)/arc/anim ] && mkdir -p ../build/$(TYPE)/arc/anim || true
 	@[ ! -d ../build/$(TYPE)/arc/blyt ] && mkdir -p ../build/$(TYPE)/arc/blyt || true
-	python2 mk$(TYPE).py ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS)
+	python3 mk$(TYPE).py ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS)
 
 ../build/$(TYPE).arc : $(TPLS) ../build/$(TYPE)/arc/blyt/$(TYPE).brlyt $(ANIMS)
 	$(ARCPACK) ../build/$(TYPE).arc ../build/$(TYPE)

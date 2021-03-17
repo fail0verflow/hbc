@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # Copyright 2008  Hector Martin  <marcan@marcansoft.com>
 # Licensed under the terms of the GNU GPL, version 2
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
@@ -21,7 +21,7 @@ except ImportError:
     from Crypto.Util.number import bytes_to_long, long_to_bytes
     from Crypto.Signature import pkcs1_15
 
-import ec
+from . import ec
 
 WII_RSA4096 = 0
 WII_RSA2048 = 1
@@ -30,13 +30,13 @@ WII_ECDSA = 2
 sigtypes = [ "RSA-4096", "RSA-2048", "EC-DSA" ]
 
 def load_rsa_key(issuer):
-    print "Loading private key for %s" % issuer
+    print("Loading private key for %s" % issuer)
     path = os.path.join(os.environ["HOME"], ".wii", "dpki", issuer + ".pem")
     return RSA.importKey(open(path, "r").read())
 
 signkeyfuncs = [ load_rsa_key, load_rsa_key, None ]
 
-NULL_IV = "\x00"*16
+NULL_IV = b"\x00"*16
 
 keylist = [
     "common-key",
@@ -86,13 +86,13 @@ known_titles_noregion = {
 }
 
 def hexdump(s,sep=" "):
-    return sep.join(map(lambda x: "%02x"%ord(x),s))
+    return sep.join(["%02x"%x for x in s])
 
 def strcmp(s1,s2):
     clen = min(len(s1),len(s2))
 
     for i in range(clen):
-        if s1[i] == "\0" and s2[i] == "\0":
+        if s1[i] == 0 and s2[i] == 0:
             return True
         if s1[i] != s2[i]:
             return False
@@ -101,10 +101,10 @@ def strcmp(s1,s2):
 def ascii(s):
     s2 = ""
     for c in s:
-        if ord(c)<0x20 or ord(c)>0x7e:
+        if c<0x20 or c>0x7e:
             s2 += "."
         else:
-            s2 += c
+            s2 += chr(c)
     return s2
 
 def pad(s,c,l):
@@ -114,15 +114,10 @@ def pad(s,c,l):
 
 def chexdump(s):
     for i in range(0,len(s),16):
-        print "%08x  %s  %s  |%s|"%(i,pad(hexdump(s[i:i+8],' ')," ",23),pad(hexdump(s[i+8:i+16],' ')," ",23),pad(ascii(s[i:i+16])," ",16))
+        print("%08x  %s  %s  |%s|"%(i,pad(hexdump(s[i:i+8],' ')," ",23),pad(hexdump(s[i+8:i+16],' ')," ",23),pad(ascii(s[i:i+16])," ",16)))
 
 def getcstring(s):
-    s2 = ""
-    for c in s:
-        if c == "\x00":
-            break
-        s2 += c
-    return s2
+    return s.split(b"\x00")[0].decode("ascii")
 
 def align(n,a):
     if a == 0:
@@ -132,10 +127,10 @@ def align(n,a):
     return n
 
 def rangel(n,s):
-    return range(n,n+s)
+    return list(range(n,n+s))
 
 def xrangel(n,s):
-    return xrange(n,n+s)
+    return range(n,n+s)
 
 def falign(f,a):
     f.seek(align(f.tell(),a))
@@ -200,7 +195,7 @@ def loadkeys(path = None):
         try:
             keys[key] = open(path + os.sep + key, "rb").read()
         except:
-            print "Warning: failed to load key %s"%key
+            print("Warning: failed to load key %s"%key)
 
 def loadkeys_dpki(path = None):
     if path is None:
@@ -210,7 +205,7 @@ def loadkeys_dpki(path = None):
 def parse_certs(blob):
     certs = {}
     certlist = []
-    while blob != "":
+    while blob != b"":
         cert = WiiCert(blob)
         certs[cert.name] = cert
         certlist.append(cert)
@@ -250,7 +245,7 @@ class WiiPKAlgo:
         code = ">"+codes[bytes]
         matchlen = len(match)
 
-        for pad in xrange(0, 256**bytes):
+        for pad in range(0, 256**bytes):
             pad += 0x4612512415125316
             pad %= 256**bytes
             padsig = signature + pack(code, pad)
@@ -270,11 +265,11 @@ class WiiRSA(WiiPKAlgo):
     def get_digest(self, signature):
         lsig = bytes_to_long(signature)
         if lsig >= self.n:
-            print "Warning: signature larger than modulus, using sig%modulus as signature"
+            print("Warning: signature larger than modulus, using sig%modulus as signature")
         ldec = pow(lsig, self.e, self.n)
         dec = long_to_bytes(ldec)
         pad = len(signature) - len(dec)
-        dec = "\x00"*pad+dec
+        dec = b"\x00"*pad+dec
         return dec[-20:]
 
     def sign(self, data, key):
@@ -340,11 +335,11 @@ class WiiDisc:
         return self.partitions
 
     def showinfo(self):
-        print "Game %s, maker %s, magic %08x: %s"%(self.gamecode, self.makercode, self.magic, self.gamename)
+        print("Game %s, maker %s, magic %08x: %s"%(self.gamecode, self.makercode, self.magic, self.gamename))
         self.read_partitions()
-        print "%d partitions in ISO:"%len(self.partitions)
+        print("%d partitions in ISO:"%len(self.partitions))
         for p_num,p_dat in enumerate(self.partitions):
-            print " [%2d] 0x%010x (%08x)"%(p_num,p_dat[0],p_dat[1])
+            print(" [%2d] 0x%010x (%08x)"%(p_num,p_dat[0],p_dat[1]))
 
 class WiiSigned:
     sigsizes = [512, 256, 60]
@@ -370,7 +365,7 @@ class WiiSigned:
 
     def update(self):
         self.data = pack(">I",self.sigtype+0x10000) + self.signature
-        self.data += "\x00" * (self.body_offset - len(self.data))
+        self.data += b"\x00" * (self.body_offset - len(self.data))
         self.data += self.body
 
     def parse(self):
@@ -388,7 +383,7 @@ class WiiSigned:
             raise ValueError("Signature type %s does not match certificate type %s!"%(sigtypes[self.sigtype],sigtypes[cert.key_type]))
         return cert.pkalgo.get_digest(self.sigtype, self.signature)
 
-    def brute_sha(self, match = "\x00", fillshort = None):
+    def brute_sha(self, match = b"\x00", fillshort = None):
         l = len(match)
 
         if fillshort is None:
@@ -408,7 +403,7 @@ class WiiSigned:
         if len(issuer) > 39:
             raise ValueError("issuer name too long!")
         self.issuer = issuer.split("-")
-        self.body = issuer + "\x00" * (0x40 - len(issuer)) + self.body[0x40:]
+        self.body = issuer + b"\x00" * (0x40 - len(issuer)) + self.body[0x40:]
         self.update()
 
     def update_signature(self, sig):
@@ -416,7 +411,7 @@ class WiiSigned:
         self.data = pack(">I",self.sigtype+0x10000) + self.signature + self.data[len(sig) + 4:]
 
     def null_signature(self):
-        self.signature = "\x00"*len(self.signature)
+        self.signature = b"\x00"*len(self.signature)
         self.data = pack(">I",self.sigtype+0x10000) + self.signature + self.data[len(self.signature) + 4:]
 
     def sign(self,certs):
@@ -453,22 +448,22 @@ class WiiSigned:
             if cert.pkalgo.can_get_digest:
                 signhash = cert.pkalgo.get_digest(self.signature)
                 if myhash == signhash:
-                    print it+"%s signed by %s using %s: %s [OK]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
+                    print(it+"%s signed by %s using %s: %s [OK]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
                 elif strcmp(myhash, signhash):
-                    print it+"%s signed by %s using %s: %s [BUG]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
-                    print it+"   Signature hash: %s"%hexdump(signhash)
+                    print(it+"%s signed by %s using %s: %s [BUG]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
+                    print(it+"   Signature hash: %s"%hexdump(signhash))
                 else:
-                    print it+"%s signed by %s using %s: %s [FAIL]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
-                    print it+"   Signature hash: %s"%hexdump(signhash)
+                    print(it+"%s signed by %s using %s: %s [FAIL]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
+                    print(it+"   Signature hash: %s"%hexdump(signhash))
             else:
                 sigok = cert.pkalgo.check_digest(self.signature,myhash)
                 if sigok:
-                    print it+"%s signed by %s using %s: %s [OK]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
+                    print(it+"%s signed by %s using %s: %s [OK]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
                 else:
-                    print it+"%s signed by %s using %s: %s [FAIL]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
+                    print(it+"%s signed by %s using %s: %s [FAIL]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
 
         except KeyError:
-            print it+"%s signed by %s using %s: %s [ISSUER NOT FOUND]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash))
+            print(it+"%s signed by %s using %s: %s [ISSUER NOT FOUND]"%(self.type, "-".join(self.issuer), sigtypes[self.sigtype], hexdump(myhash)))
 
 class WiiTik(WiiSigned):
     def __init__(self, data):
@@ -480,7 +475,7 @@ class WiiTik(WiiSigned):
     def parse(self):
         self.title_key_enc = self.body[0x7f:0x8f]
         self.title_id = self.body[0x9c:0xa4]
-        self.title_key_iv = self.title_id + "\x00"*8
+        self.title_key_iv = self.title_id + b"\x00"*8
         self.common_key_index = ord(self.body[0xb1:0xb2])
 
         try:
@@ -489,7 +484,7 @@ class WiiTik(WiiSigned):
             elif self.common_key_index == 1:
                 key = keys["korean-key"]
             else:
-                print "WARNING: OLD FAKESIGNED TICKET WITH BAD KEY OFFSET, ASSUMING NORMAL COMMON KEY"
+                print("WARNING: OLD FAKESIGNED TICKET WITH BAD KEY OFFSET, ASSUMING NORMAL COMMON KEY")
                 key = keys["common-key"]
             aes = AES.new(key, AES.MODE_CBC, self.title_key_iv)
             self.title_key = aes.decrypt(self.title_key_enc)
@@ -505,13 +500,13 @@ class WiiTik(WiiSigned):
         return 0x164
 
     def showinfo(self, it=""):
-        print it+"ETicket: "
-        print it+" Title ID: "+repr(self.title_id)
-        print it+" Title key IV: "+hexdump(self.title_key_iv)
-        print it+" Title key (encrypted): "+hexdump(self.title_key_enc)
-        print it+" Common key index: %d" % self.common_key_index
+        print(it+"ETicket: ")
+        print(it+" Title ID: "+repr(self.title_id))
+        print(it+" Title key IV: "+hexdump(self.title_key_iv))
+        print(it+" Title key (encrypted): "+hexdump(self.title_key_enc))
+        print(it+" Common key index: %d" % self.common_key_index)
         if self.title_key is not None:
-            print it+" Title key (decrypted): "+hexdump(self.title_key)
+            print(it+" Title key (decrypted): "+hexdump(self.title_key))
 
 class WiiPartitionOffsets:
     def __init__(self, data):
@@ -528,9 +523,9 @@ class WiiPartitionOffsets:
         self.data_size = unpack(">I",self.data[0x18:0x1c])[0]<<2
 
     def showinfo(self, it=""):
-        print it+"TMD @ 0x%x [0x%x], Certs @ 0x%x [0x%x], H3 @ 0x%x, Data @ 0x%x [0x%x]"%(
+        print(it+"TMD @ 0x%x [0x%x], Certs @ 0x%x [0x%x], H3 @ 0x%x, Data @ 0x%x [0x%x]"%(
             self.tmd_offset, self.tmd_size, self.cert_offset, self.cert_size,
-            self.h3_offset, self.data_offset, self.data_size)
+            self.h3_offset, self.data_offset, self.data_size))
 
     def update(self):
         self.data = pack(">II",self.tmd_size, self.tmd_offset>>2)
@@ -600,20 +595,20 @@ class WiiTmd(WiiSigned):
         self.update()
 
     def showinfo(self,it=""):
-        print it+"TMD: "
-        print it+" Versions: %d, CA CRL %d, Signer CRL %d, System %d-%d"%(
-            self.version,self.ca_crl_version,self.signer_crl_version,self.sys_version>>32,self.sys_version&0xffffffff)
-        print it+" Title ID: %s-%s (%s-%s)"%(hexdump(self.title_id[:4],''),hexdump(self.title_id[4:],''),repr(self.title_id[:4]),repr(self.title_id[4:]))
-        print it+" Title Type: %d"%self.title_type
-        print it+" Group ID: %s"%repr(self.group_id)
-        print it+" Access Rights: 0x%08x"%self.access_rights
-        print it+" Title Version: 0x%x"%self.title_version
-        print it+" Boot Index: %d"%self.boot_index
-        print it+" Contents:"
-        print it+"  ID       Index Type    Size         Hash"
+        print(it+"TMD: ")
+        print(it+" Versions: %d, CA CRL %d, Signer CRL %d, System %d-%d"%(
+            self.version,self.ca_crl_version,self.signer_crl_version,self.sys_version>>32,self.sys_version&0xffffffff))
+        print(it+" Title ID: %s-%s (%s-%s)"%(hexdump(self.title_id[:4],''),hexdump(self.title_id[4:],''),repr(self.title_id[:4]),repr(self.title_id[4:])))
+        print(it+" Title Type: %d"%self.title_type)
+        print(it+" Group ID: %s"%repr(self.group_id))
+        print(it+" Access Rights: 0x%08x"%self.access_rights)
+        print(it+" Title Version: 0x%x"%self.title_version)
+        print(it+" Boot Index: %d"%self.boot_index)
+        print(it+" Contents:")
+        print(it+"  ID       Index Type    Size         Hash")
         for ct in self.get_content_records():
 
-            print it+"  %08X %-5d 0x%-5x %-12s %s"%(ct.cid, ct.index, ct.ftype, "0x%x"%ct.size,hexdump(ct.sha))
+            print(it+"  %08X %-5d 0x%-5x %-12s %s"%(ct.cid, ct.index, ct.ftype, "0x%x"%ct.size,hexdump(ct.sha)))
 
 class WiiCert(WiiSigned):
     key_sizes = [516, 260, 60]
@@ -638,7 +633,7 @@ class WiiCert(WiiSigned):
         self.pkalgo = self.pk_types[self.key_type](self.key)
 
     def showinfo(self,it=""):
-        print it+"%s (%s)"%(self.name,sigtypes[self.key_type])
+        print(it+"%s (%s)"%(self.name,sigtypes[self.key_type]))
 
 class WiiRootCert:
     def __init__(self, data):
@@ -650,7 +645,7 @@ class WiiRootCert:
         self.key_type = 0
 
     def showinfo(self,it=""):
-        print it+"%s (%s)"%(self.name,sigtypes[self.key_type])
+        print(it+"%s (%s)"%(self.name,sigtypes[self.key_type]))
 
 class WiiPartition:
     BLOCKS_PER_SUBGROUP = 8
@@ -732,37 +727,37 @@ class WiiPartition:
         self.f.write(self.offsets.data)
 
     def showinfo(self,it=""):
-        print it+"Wii Partition at 0x%010x:"%(self.offset)
+        print(it+"Wii Partition at 0x%010x:"%(self.offset))
         self.offsets.showinfo(" ")
         self.tik.showinfo(it+" ")
         self.tik.showsig(self.certs,it+" ")
         self.tmd.showinfo(it+" ")
         self.tmd.showsig(self.certs,it+" ")
         if self.checkh4hash():
-            print it+" H4 hash check passed"
+            print(it+" H4 hash check passed")
         else:
-            print it+" H4 check failed: SHA1(H3) = "+hexdump(self.geth4hash())
-        print it+" Data:"
-        print it+"  Blocks:    %d"%self.data_blocks
-        print it+"  Subgroups: %d (plus %d blocks)"%(self.data_subgroups,self.extra_subgroup_blocks)
-        print it+"  Groups:    %d (plus %d blocks)"%(self.data_groups,self.extra_group_blocks)
+            print(it+" H4 check failed: SHA1(H3) = "+hexdump(self.geth4hash()))
+        print(it+" Data:")
+        print(it+"  Blocks:    %d"%self.data_blocks)
+        print(it+"  Subgroups: %d (plus %d blocks)"%(self.data_subgroups,self.extra_subgroup_blocks))
+        print(it+"  Groups:    %d (plus %d blocks)"%(self.data_groups,self.extra_group_blocks))
         self.showcerts(it+" ")
 
     def showcerts(self,it=""):
-        print it+"Certificates: "
+        print(it+"Certificates: ")
         for cert in self.certlist:
             cert.showinfo(it+" - ")
             cert.showsig(self.certs,it+"    ")
 
     def geth4hash(self):
-        return SHA.new(''.join(self.h3) + "\x00"*self.TAIL_H3).digest()
+        return SHA.new(b''.join(self.h3) + b"\x00"*self.TAIL_H3).digest()
 
     def checkh4hash(self):
         return self.geth4hash() == self.tmd.get_content_records()[0].sha
 
     def updateh3(self):
         self._seek(self.offsets.h3_offset)
-        self.f.write(''.join(self.h3))
+        self.f.write(b''.join(self.h3))
 
     def updateh4(self):
         cr = self.tmd.get_content_records()[0]
@@ -903,7 +898,7 @@ class WiiPartition:
             else:
                 raise ValueError("Attempted to read group past the end of the partition data")
 
-        data = ""
+        data = b""
         for i in range(nblocks):
             data += self.readblock(blockoff+i)
         return data
@@ -919,7 +914,7 @@ class WiiPartition:
             if groupnum == self.data_groups and self.extra_group_blocks > 0 and len(data) == (self.extra_group_blocks * self.PLAIN_BLOCK_SIZE):
                 blocks = self.extra_group_blocks
                 writesize = blocks * self.CIPHER_BLOCK_SIZE
-                data += "\x00" * (self.PLAIN_BLOCK_SIZE * self.BLOCKS_PER_GROUP - blocks)
+                data += b"\x00" * (self.PLAIN_BLOCK_SIZE * self.BLOCKS_PER_GROUP - blocks)
             else:
                 raise ValueError("Attempted to write group past the end of the partition data")
         else:
@@ -930,12 +925,12 @@ class WiiPartition:
 
         h0 = []
         h1 = []
-        h2 = ""
+        h2 = b""
         for subgroup in range(self.SUBGROUPS_PER_GROUP):
-            bh1 = ""
+            bh1 = b""
             sh0 = []
             for block in range(self.BLOCKS_PER_SUBGROUP):
-                bh0 = ""
+                bh0 = b""
                 for chunk in range(self.DATA_CHUNKS_PER_BLOCK):
                     offset = subgroup * self.PLAIN_SUBGROUP_SIZE + block * self.PLAIN_BLOCK_SIZE + chunk * self.DATA_CHUNK_SIZE
                     bh0 += SHA.new(data[offset:offset+self.DATA_CHUNK_SIZE]).digest()
@@ -946,16 +941,16 @@ class WiiPartition:
             h2 += SHA.new(bh1).digest()
         h3 = SHA.new(h2).digest()
 
-        data_out = ""
+        data_out = b""
         for subgroup in range(self.SUBGROUPS_PER_GROUP):
             for block in range(self.BLOCKS_PER_SUBGROUP):
                 shablock = ""
                 shablock += h0[subgroup][block]
-                shablock += "\x00"*20
+                shablock += b"\x00"*20
                 shablock += h1[subgroup]
-                shablock += "\x00"*32
+                shablock += b"\x00"*32
                 shablock += h2
-                shablock += "\x00"*32
+                shablock += b"\x00"*32
                 assert len(shablock) == self.SHA_SIZE, "sha block size messed up"
                 aes = AES.new(self.tik.title_key, AES.MODE_CBC, NULL_IV)
                 shablock = aes.encrypt(shablock)
@@ -1019,7 +1014,7 @@ class WiiCachedPartition(WiiPartition):
 
     def _dprint(self, s, *args):
         if self.debug:
-            print s%tuple(args)
+            print(s%tuple(args))
 
     def _readblock(self, blocknum):
         self._dprint("_readblock(0x%x)",blocknum)
@@ -1174,7 +1169,7 @@ class WiiCachedPartition(WiiPartition):
             hb = self.readblock(bstart - 1)
             hb = hb[:hdroff] + data[:header] + hb[hdroff+header:]
             self.writeblock(bstart - 1, hb)
-        for block in xrange(bnum):
+        for block in range(bnum):
             self.writeblock(block+bstart, data[header+block*self.PLAIN_BLOCK_SIZE:header+(block+1)*self.PLAIN_BLOCK_SIZE])
         if footer:
             fb = self.readblock(bstart+bnum)
@@ -1246,11 +1241,11 @@ class WiiApploader:
         self.extrafooter = data[0x20+self.textsize+self.trailersize:]
 
     def showinfo(self, it=""):
-        print it+"Apploader:"
-        print it+" Date: %s"%self.date
-        print it+" Entrypoint: 0x%08x"%self.entry
-        print it+" Text size: 0x%x"%self.textsize
-        print it+" Trailer size: 0x%x"%self.trailersize
+        print(it+"Apploader:")
+        print(it+" Date: %s"%self.date)
+        print(it+" Entrypoint: 0x%08x"%self.entry)
+        print(it+" Text size: 0x%x"%self.textsize)
+        print(it+" Trailer size: 0x%x"%self.trailersize)
 
 class WiiPartitionData:
     def __init__(self, partition):
@@ -1291,11 +1286,11 @@ class WiiPartitionData:
         self.dol = dol
         self.part.write(self.doloff, dol)
     def showinfo(self,it=""):
-        print it+"Partition data:"
-        print it+" Game Name: %s"%self.gamename
-        print it+" Offsets: DOL @ 0x%x [0x%x], Apploader @ 0x%x [0x%x], FST @ 0x%x [0x%x]"%(self.doloff, self.dolsize, 0x2440, self.apploadersize, self.fstoff, self.fstsize)
+        print(it+"Partition data:")
+        print(it+" Game Name: %s"%self.gamename)
+        print(it+" Offsets: DOL @ 0x%x [0x%x], Apploader @ 0x%x [0x%x], FST @ 0x%x [0x%x]"%(self.doloff, self.dolsize, 0x2440, self.apploadersize, self.fstoff, self.fstsize))
         self.apploader.showinfo(it+" ")
-        print it+"FST:"
+        print(it+"FST:")
         self.fst.show(it+" ")
 
 class FakeFile:
@@ -1381,7 +1376,7 @@ class WiiWad:
 
         self.f.seek(4)
         wt = self.f.read(2)
-        if wt == "\x00\x00":
+        if wt == b"\x00\x00":
             self.read_boot2hdr()
         else:
             self.read_hdr()
@@ -1389,7 +1384,7 @@ class WiiWad:
         certdata = self.f.read(self.cert_len)
         self.certlist = []
         self.certs = {}
-        while certdata != "":
+        while certdata != b"":
             cert = WiiCert(certdata)
             self.certs[cert.name] = cert
             self.certlist.append(cert)
@@ -1415,8 +1410,8 @@ class WiiWad:
         self.f.write(self.tik.data)
 
     def showinfo(self,it=""):
-        print it+"Wii Wad:"
-        print it+" Header 0x%x Type %s Certs 0x%x Tik 0x%x TMD 0x%x Data 0x%x @ 0x%x Footer 0x%x"%(self.hdr_len, repr(self.wadtype), self.cert_len, self.tik_len, self.tmd_len, self.data_len, self.data_off, self.footer_len)
+        print(it+"Wii Wad:")
+        print(it+" Header 0x%x Type %s Certs 0x%x Tik 0x%x TMD 0x%x Data 0x%x @ 0x%x Footer 0x%x"%(self.hdr_len, repr(self.wadtype), self.cert_len, self.tik_len, self.tmd_len, self.data_len, self.data_off, self.footer_len))
         self.tik.showinfo(it+" ")
         self.tik.showsig(self.certs,it+" ")
         self.tmd.showinfo(it+" ")
@@ -1426,15 +1421,15 @@ class WiiWad:
             d = self.getcontent(ct.index)
             sha = SHA.new(d).digest()
             if sha != ct.sha:
-                print it+" SHA-1 for content %08x is invalid:"%ct.cid, hexdump(sha)
-                print it+"  Expected:",hexdump(ct.sha)
+                print(it+" SHA-1 for content %08x is invalid:"%ct.cid, hexdump(sha))
+                print(it+"  Expected:",hexdump(ct.sha))
                 allok=False
         if allok:
-            print it+" All content SHA-1 hashes are valid"
+            print(it+" All content SHA-1 hashes are valid")
         self.showcerts(it+" ")
 
     def showcerts(self,it=""):
-        print it+"Certificates: "
+        print(it+"Certificates: ")
         for cert in self.certlist:
             cert.showinfo(it+" - ")
             cert.showsig(self.certs,it+"    ")
@@ -1447,7 +1442,7 @@ class WiiWad:
                 if encrypted:
                     return data
 
-                iv = pack(">H",index)+"\x00"*14
+                iv = pack(">H",index)+b"\x00"*14
                 aes = AES.new(self.tik.title_key, AES.MODE_CBC, iv)
                 return aes.decrypt(data)[:ct.size]
 
@@ -1470,14 +1465,14 @@ class WiiWadMaker(WiiWad):
         self.tik_len = len(self.tik.data)
 
         # if boot2, set type to "ib"
-        if self.tmd.title_id == "\x00\x00\x00\x01\x00\x00\x00\x01":
+        if self.tmd.title_id == b"\x00\x00\x00\x01\x00\x00\x00\x01":
             if nandwad:
                 self.wadtype = 0
                 self.ALIGNMENT = 0
             else:
-                self.wadtype = "ib"
+                self.wadtype = b"ib"
         else:
-            self.wadtype = "Is"
+            self.wadtype = b"Is"
 
         self.data_len = 0
         self.footer = footer
@@ -1509,16 +1504,16 @@ class WiiWadMaker(WiiWad):
         cr.size = len(data)
         self.tmd.update_content_record(i,cr)
         if len(data)%16 != 0:
-            data += "\x00"*(16-len(data)%16)
+            data += b"\x00"*(16-len(data)%16)
         falign(self.f,0x40)
-        iv = pack(">H",cr.index)+"\x00"*14
+        iv = pack(">H",cr.index)+b"\x00"*14
         aes = AES.new(self.tik.title_key, AES.MODE_CBC, iv)
         self.f.write(aes.encrypt(data))
         falign(self.f,0x40)
 
     def adddata_encrypted(self, data):
         if len(data)%16 != 0:
-            data += "\x00"*(16-len(data)%16)
+            data += b"\x00"*(16-len(data)%16)
         falign(self.f,0x40)
         self.f.write(data)
         falign(self.f,0x40)
@@ -1531,7 +1526,7 @@ class WiiWadMaker(WiiWad):
         falign(self.f,self.ALIGNMENT)
         self.f.truncate()
         if pad:
-            self.f.write("\x00"*0x40)
+            self.f.write(b"\x00"*0x40)
         self.updatetmd()
         self.f.seek(0)
         if self.wadtype == 0:
@@ -1641,9 +1636,9 @@ class WiiFSTFile:
         self.off = off
         self.size = size
     def show(self, it=""):
-        print "%s%s @ 0x%x [0x%x]"%(it,self.name,self.off,self.size)
+        print("%s%s @ 0x%x [0x%x]"%(it,self.name,self.off,self.size))
     def generate(self, offset, stringoff, parent, dataoff, wiigcm=False):
-        stringdata = self.name + "\x00"
+        stringdata = self.name.encode("ascii") + b"\x00"
         off = self.off+dataoff
         if wiigcm:
             off >>= 2
@@ -1688,9 +1683,9 @@ class WiiFSTDir:
             raise ValueError("WTF")
     def show(self, it=""):
         if self.name == "":
-            print it+"/"
+            print(it+"/")
         else:
-            print it+self.name+"/"
+            print(it+self.name+"/")
         for i in self.entries:
             i.show(it+self.name+"/")
     def dump(self):
@@ -1698,15 +1693,15 @@ class WiiFSTDir:
     def add(self,x):
         self.entries.append(x)
     def generate(self, offset, stringoff, parent, dataoff, wiigcm=False):
-        stringdata = self.name + "\x00"
+        stringdata = self.name.encode("ascii") + b"\x00"
         myoff = offset
         mysoff = stringoff
         stringoff+=len(stringdata)
         offset += 1
-        subdata=""
+        subdata=b""
         for e in self.entries:
             d, s = e.generate(offset, stringoff, myoff, dataoff, wiigcm)
-            offset += len(d)/12
+            offset += len(d)//12
             stringoff += len(s)
             stringdata += s
             subdata += d

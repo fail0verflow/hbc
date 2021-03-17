@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -15,12 +15,12 @@ certfile = args.pop(0)
 
 certs, certlist = wii.parse_certs(open(args.pop(0), "rb").read())
 
-print "Certification file %s: " % certfile
+print("Certification file %s: " % certfile)
 cert = wii.WiiCert(open(certfile, "rb").read())
 cert.showinfo(" ")
 cert.showsig(certs," ")
 
-print "Certificates:"
+print("Certificates:")
 for cert in certlist:
 	cert.showinfo(" - ")
 	cert.showsig(certs,"    ")

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -6,8 +6,8 @@ import pywii as wii
 wii.loadkeys()
 
 if len(sys.argv) != 4:
-	print "Usage:"
-	print " python %s <encrypted ISO> <partition number> <dol to inject>"%sys.argv[0]
+	print("Usage:")
+	print(" python %s <encrypted ISO> <partition number> <dol to inject>"%sys.argv[0])
 	sys.exit(1)
 
 iso_name, partno, dol_name = sys.argv[1:4]

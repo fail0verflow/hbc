@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys, os, os.path
 import pywii as wii
@@ -11,8 +11,8 @@ def parseint(d):
 	return int(d)
 
 if len(sys.argv) < 4 or len(sys.argv) > 7:
-	print "Usage:"
-	print " python %s <encrypted ISO> <partition number> <file to inject> [Partition offset] [data offset] [length]"%sys.argv[0]
+	print("Usage:")
+	print(" python %s <encrypted ISO> <partition number> <file to inject> [Partition offset] [data offset] [length]"%sys.argv[0])
 	sys.exit(1)
 
 iso_name, partno, data_name = sys.argv[1:4]
@@ -34,10 +34,10 @@ if copy_length == None:
 	copy_length = data_len - data_offset
 copy_end = data_offset + copy_length
 if copy_length < 0:
-	print "Error: negative copy length"
+	print("Error: negative copy length")
 	sys.exit(1)
 if copy_end > data_len:
-	print "Error: data file is too small"
+	print("Error: data file is too small")
 	sys.exit(1)
 
 disc = wii.WiiDisc(iso_name)
@@ -52,7 +52,7 @@ while left > 0:
 	blocklen = min(left, 4*1024*1024)
 	d = dataf.read(blocklen)
 	if len(d) != blocklen:
-		print "File EOF reached!"
+		print("File EOF reached!")
 		sys.exit(1)
 	part.write(offset, d)
 	offset += blocklen

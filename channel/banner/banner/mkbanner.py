@@ -244,7 +244,7 @@ class BubbleInstance:
 		for i in tps:
 			if len(i.Triplets) > 0:
 				if i.Triplets[-1][0] >= self.Start:
-					print "WTF at %s: %f >= %f"%(self.Picture.Name,i.Triplets[-1][0],self.Start)
+					print("WTF at %s: %f >= %f"%(self.Picture.Name,i.Triplets[-1][0],self.Start))
 					raise RuntimeError("We Have A Problem")
 		
 		brlan.Anim[self.Picture.Name][Brlan.A_COORD][Brlan.C_X].Triplets.append((self.Start, self.X, 0))
@@ -293,15 +293,15 @@ class BubbleCollection:
 					#print "Freeing instance: [%f-%f]"%(user.Start,user.End)
 					tis[i] = pic, None
 	def printinstances(self):
-		print "Type Instances:"
+		print("Type Instances:")
 		for tid, tis in enumerate(self.TypeInstances):
-			print " Type Instances for type %d (%s):"%(tid, self.BubbleTypes[tid][0].Name)
+			print(" Type Instances for type %d (%s):"%(tid, self.BubbleTypes[tid][0].Name))
 			for i, ti in enumerate(tis):
 				pic, user = ti
 				if user is None:
-					print "  %d: Picture %s, free"%(i,pic.Name)
+					print("  %d: Picture %s, free"%(i,pic.Name))
 				else:
-					print "  %d: Picture %s, user: %s [%f-%f]"%(i,pic.Name,repr(user),user.Start,user.End)
+					print("  %d: Picture %s, user: %s [%f-%f]"%(i,pic.Name,repr(user),user.Start,user.End))
 	def render(self):
 		for t,c in self.BubbleTypes:
 			t.makemat(self.Brlyt)
@@ -330,9 +330,9 @@ class BubbleCollection:
 			i.render(self.Brlan)
 		#self.printinstances()
 
-print "Fake Start",fakeStart
-print "Loop Start",loopStart
-print "Loop End",loopEnd
+print("Fake Start",fakeStart)
+print("Loop Start",loopStart)
+print("Loop End",loopEnd)
 
 col = BubbleCollection(brlyt, brlan, bubblepane)
 col.addtype(BubbleType("abubble1", 48, 48),1)
@@ -374,10 +374,10 @@ for i in col.Instances:
 col.render()
 
 brldata = brlyt.Pack()
-open(sys.argv[1],"w").write(brldata)
+open(sys.argv[1],"wb").write(brldata)
 
 bradata = brlan.Pack(loopStart)
-open(sys.argv[2],"w").write(bradata)
+open(sys.argv[2],"wb").write(bradata)
 
 bradata = brlan.Pack(loopStart, loopEnd)
-open(sys.argv[3],"w").write(bradata)
+open(sys.argv[3],"wb").write(bradata)

@@ -4,7 +4,7 @@ class StructType(tuple):
 	def __getitem__(self, value):
 		return [self] * value
 	def __call__(self, value, endian='<'):
-		if isinstance(value, str):
+		if isinstance(value, bytes):
 			return struct.unpack(endian + tuple.__getitem__(self, 0), value[:tuple.__getitem__(self, 1)])[0]
 		else:
 			return struct.pack(endian + tuple.__getitem__(self, 0), value)
@@ -12,8 +12,8 @@ class StructType(tuple):
 class StructException(Exception):
 	pass
 
-class Struct(object):
-	__slots__ = ('__attrs__', '__baked__', '__defs__', '__endian__', '__next__', '__sizes__', '__values__')
+class Struct:
+	__slots__ = ('__attrs__', '__baked__', '__defs__', '__next__', '__sizes__', '__values__')
 	int8 = StructType(('b', 1))
 	uint8 = StructType(('B', 1))
 	
@@ -49,7 +49,7 @@ class Struct(object):
 		else:
 			sys.settrace(self.__trace__)
 			func()
-			for name in func.func_code.co_varnames:
+			for name in func.__code__.co_varnames:
 				value = self.__frame__.f_locals[name]
 				self.__setattr__(name, value)
 		
@@ -186,11 +186,13 @@ class Struct(object):
 				if len(temp) != size:
 					raise StructException('Expected %i byte string, got %i' % (size, len(temp)))
 				
+				if stripNulls:
+					temp = temp.rstrip(b'\0')
+				
 				if encoding != None:
 					temp = temp.decode(encoding)
-				
-				if stripNulls:
-					temp = temp.rstrip('\0')
+				else:
+					temp = temp.decode("ascii")
 				
 				if attrs[0] == '*':
 					name = attrs[1:]
@@ -231,7 +233,7 @@ class Struct(object):
 	def pack(self):
 		arraypos, arrayname = None, None
 		
-		ret = ''
+		ret = b''
 		for i in range(len(self.__defs__)):
 			sdef, size, attrs = self.__defs__[i], self.__sizes__[i], self.__attrs__[i]
 			
@@ -251,9 +253,11 @@ class Struct(object):
 				
 				if encoding != None:
 					temp = temp.encode(encoding)
+				elif isinstance(temp, str):
+					temp = temp.encode("ascii")
 				
 				temp = temp[:size]
-				ret += temp + ('\0' * (size - len(temp)))
+				ret += temp + (b'\0' * (size - len(temp)))
 			elif sdef == Struct:
 				if attrs[0] == '*':
 					if arrayname != attrs:
@@ -299,16 +303,16 @@ if __name__=='__main__':
 			self.hax = HaxStruct
 	
 	test = TestStruct()
-	test.unpack('\xEF\xBE\xAD\xDE\x00\x00\x80\x3Fdeadbeef\x04\x00\x00\x00test\xCA\xFE\xBA\xBE\xBE\xBA\xFE\xCA')
+	test.unpack(b'\xEF\xBE\xAD\xDE\x00\x00\x80\x3Fdeadbeef\x04\x00\x00\x00test\xCA\xFE\xBA\xBE\xBE\xBA\xFE\xCA')
 	assert test.foo == 0xDEADBEEF
 	assert test.bar == 1.0
-	assert test.baz == 'deadbeef'
+	assert test.baz == b'deadbeef'
 	assert test.omg == 4
-	assert test.wtf == 'test'
+	assert test.wtf == b'test'
 	assert test.hax.thing1 == 0xBEBAFECA
 	assert test.hax.thing2 == 0xCAFEBABE
 	
-	print 'Tests successful'
+	print('Tests successful')
 	
 	"""
 	@Struct.LE

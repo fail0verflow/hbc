@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # Copyright 2007,2008  Segher Boessenkool  <segher@kernel.crashing.org>
 # Copyright 2008  Hector Martin  <marcan@marcansoft.com>
 # Licensed under the terms of the GNU GPL, version 2
@@ -12,11 +12,11 @@ except ImportError:
     from Crypto.Util.number import bytes_to_long, long_to_bytes
 
 # y**2 + x*y = x**3 + x + b
-ec_b = "\x00\x66\x64\x7e\xde\x6c\x33\x2c\x7f\x8c\x09\x23\xbb\x58\x21"+\
-	   "\x3b\x33\x3b\x20\xe9\xce\x42\x81\xfe\x11\x5f\x7d\x8f\x90\xad"
+ec_b = (b"\x00\x66\x64\x7e\xde\x6c\x33\x2c\x7f\x8c\x09\x23\xbb\x58\x21"+
+	    b"\x3b\x33\x3b\x20\xe9\xce\x42\x81\xfe\x11\x5f\x7d\x8f\x90\xad")
 
 def hexdump(s,sep=""):
-	return sep.join(map(lambda x: "%02x"%ord(x),s))
+	return sep.join(["%02x"%ord(x) for x in s])
 
 def bhex(s,sep=""):
 	return hexdump(long_to_bytes(s,30),sep)
@@ -41,20 +41,20 @@ class ByteArray(array):
 		else:
 			array.__setitem__(self, item, value & 0xFF)
 	def __long__(self):
-		return bytes_to_long(self.tostring())
+		return bytes_to_long(self.tobytes())
 	def __str__(self):
-		return ''.join(["%02x"%ord(x) for x in self.tostring()])
+		return ''.join(["%02x"%x for x in self.tobytes()])
 	def __repr__(self):
-		return "ByteArray('%s')"%''.join(["\\x%02x"%ord(x) for x in self.tostring()])
+		return "ByteArray('%s')"%''.join(["\\x%02x"%x for x in self.tobytes()])
 
 class ELT_PY:
 	SIZEBITS=233
 	SIZE=(SIZEBITS+7)/8
-	square = ByteArray("\x00\x01\x04\x05\x10\x11\x14\x15\x40\x41\x44\x45\x50\x51\x54\x55")
+	square = ByteArray(b"\x00\x01\x04\x05\x10\x11\x14\x15\x40\x41\x44\x45\x50\x51\x54\x55")
 	def __init__(self, initializer=None):
-		if isinstance(initializer, long) or isinstance(initializer, int):
+		if isinstance(initializer, int) or isinstance(initializer, int):
 			self.d = ByteArray(long_to_bytes(initializer,self.SIZE))
-		elif isinstance(initializer, str):
+		elif isinstance(initializer, bytes):
 			self.d = ByteArray(initializer)
 		elif isinstance(initializer, ByteArray):
 			self.d = ByteArray(initializer)
@@ -80,12 +80,12 @@ class ELT_PY:
 		return cmp(self.d,other.d)
 
 	def __long__(self):
-		return long(self.d)
+		return int(self.d)
 	def __repr__(self):
 		return repr(self.d).replace("ByteArray","ELT")
-	def __str__(self):
-		return str(self.d)
-	def __nonzero__(self):
+	def __bytes__(self):
+		return bytes(self.d)
+	def __bool__(self):
 		for x in self.d:
 			if x != 0:
 				return True
@@ -184,21 +184,21 @@ class ELT_PY:
 	def __setitem__(self,item,value):
 		self.d[item] = value
 	def tobignum(self):
-		return bytes_to_long(self.d.tostring())
+		return bytes_to_long(self.d.tobytes())
 	def tobytes(self):
-		return self.d.tostring()
+		return self.d.tobytes()
 
 class ELT_C(ELT_PY):
 	def __mul__(self,other):
 		if not isinstance(other,ELT):
 			return NotImplemented
-		return ELT(_ec.elt_mul(self.d.tostring(),other.d.tostring()))
+		return ELT(_ec.elt_mul(self.d.tobytes(),other.d.tobytes()))
 	def __rdiv__(self,other):
 		if other != 1:
 			return ELT_PY.__rdiv__(self,other)
-		return ELT(_ec.elt_inv(self.d.tostring()))
+		return ELT(_ec.elt_inv(self.d.tobytes()))
 	def _square(self):
-		return ELT(_ec.elt_square(self.d.tostring()))
+		return ELT(_ec.elt_square(self.d.tobytes()))
 
 if fastelt:
 	ELT = ELT_C
@@ -207,7 +207,7 @@ else:
 
 class Point:
 	def __init__(self,x,y=None):
-		if isinstance(x,str) and (y is None) and (len(x) == 60):
+		if isinstance(x,bytes) and (y is None) and (len(x) == 60):
 			self.x = ELT(x[:30])
 			self.y = ELT(x[30:])
 		elif isinstance(x,Point):
@@ -292,7 +292,7 @@ class Point:
 		return "(%s,%s)"%(str(self.x),str(self.y))
 	def __repr__(self):
 		return "Point"+str(self)
-	def __nonzero__(self):
+	def __bool__(self):
 		return self.x or self.y
 	def tobytes(self):
 		return self.x.tobytes() + self.y.tobytes()
@@ -305,15 +305,15 @@ def bn_inv(a,N):
 
 # order of the addition group of points
 ec_N = bytes_to_long(
-			"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"+\
-			"\x13\xe9\x74\xe7\x2f\x8a\x69\x22\x03\x1d\x26\x03\xcf\xe0\xd7")
+			b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"+
+			b"\x13\xe9\x74\xe7\x2f\x8a\x69\x22\x03\x1d\x26\x03\xcf\xe0\xd7")
 
 # base point
 ec_G = Point(
-	"\x00\xfa\xc9\xdf\xcb\xac\x83\x13\xbb\x21\x39\xf1\xbb\x75\x5f"+
-	"\xef\x65\xbc\x39\x1f\x8b\x36\xf8\xf8\xeb\x73\x71\xfd\x55\x8b"+
-	"\x01\x00\x6a\x08\xa4\x19\x03\x35\x06\x78\xe5\x85\x28\xbe\xbf"+
-	"\x8a\x0b\xef\xf8\x67\xa7\xca\x36\x71\x6f\x7e\x01\xf8\x10\x52")
+	b"\x00\xfa\xc9\xdf\xcb\xac\x83\x13\xbb\x21\x39\xf1\xbb\x75\x5f"+
+	b"\xef\x65\xbc\x39\x1f\x8b\x36\xf8\xf8\xeb\x73\x71\xfd\x55\x8b"+
+	b"\x01\x00\x6a\x08\xa4\x19\x03\x35\x06\x78\xe5\x85\x28\xbe\xbf"+
+	b"\x8a\x0b\xef\xf8\x67\xa7\xca\x36\x71\x6f\x7e\x01\xf8\x10\x52")
 
 def generate_ecdsa(k, sha):
 	k = bytes_to_long(k)
