@@ -254,7 +254,7 @@ class TPL(object):
 						inp += 1
 					
 					ofs += x
-					inp += (8 - off) / 2
+					inp += (8 - off) // 2
 				outp += off
 			outp += x * 7
 		
@@ -958,16 +958,21 @@ class Brlyt(object):
 			self.Alpha = Struct.uint16
 			self.Name = Struct.string(0x18, stripNulls=True)
 			self.Coords = Struct.float[10]
-		
-	class BrlytPIC1(BrlytPAN1):
+
+	class BrlytPIC1v1(BrlytPAN1):
 		FOURCC = "pic1"
 		def __format__(self):
 			Brlyt.BrlytPAN1.__format__(self)
 			self.unk = Struct.uint8[16]
 			self.Material = Struct.uint16
 			self.Flags2 = Struct.uint16
+
+	class BrlytPIC1v2(BrlytPIC1v1):
+		FOURCC = "pic1"
+		def __format__(self):
+			Brlyt.BrlytPIC1v1.__format__(self)
 			self.MaterialCoords = Struct.float[8]
-			
+
 	def __init__(self, archive, data, renderer):
 		self.Archive = archive
 		self.Textures = Brlyt.BrlytTXL1()
@@ -978,7 +983,7 @@ class Brlyt(object):
 		self.Objects = {}
 		self.PanePath = []
 		self.PaneId = 0
-		self.Language = "ENG"
+		self.Language = b"ENG"
 		self.Renderer = renderer
 		
 		if data != None:
@@ -1030,7 +1035,7 @@ class Brlyt(object):
 		if isinstance(object,Pane):
 			atoms += 1
 			if isinstance(object,Picture):
-				atom = Brlyt.BrlytPIC1()
+				atom = Brlyt.BrlytPIC1v2()
 			else:
 				atom = Brlyt.BrlytPAN1()
 			atom.Name = object.Name.encode("ascii") + b"\x00"*(0x18-len(object.Name))
@@ -1041,7 +1046,7 @@ class Brlyt(object):
 				atom.Flags2 = object.Flags2
 				atom.Material = object.Material
 				atom.unk = object.Unk
-				atom.MaterialCoords = sum(list(map(list,object.MaterialCoords)),[])
+				atom.MaterialCoords = sum(object.MaterialCoords,[])
 			data = atom.pack()
 			
 			if len(object.Children) > 0:
@@ -1163,13 +1168,20 @@ class Brlyt(object):
 	
 	def PIC1(self, data):
 		wii.chexdump(data)
-		pic = Brlyt.BrlytPIC1()
+		if len(data) == len(Brlyt.BrlytPIC1v1()):
+			pic = Brlyt.BrlytPIC1v1()
+		else:
+			pic = Brlyt.BrlytPIC1v2()
 		pic.unpack(data)
-		mc = []
-		for i in range(4):
-			mc.append(pic.MaterialCoords[i*2:i*2+2])
-		print(mc)
-		p = Picture(pic.Name, pic.Flags, pic.Alpha/256.0, pic.Coords, pic.unk, pic.Material, pic.Flags2, mc)
+
+		kw = {}
+		if not isinstance(pic, Brlyt.BrlytPIC1v1):
+			mc = []
+			for i in range(4):
+				mc.append(pic.MaterialCoords[i*2:i*2+2])
+			kw["matcoord"] = mc
+
+		p = Picture(pic.Name, pic.Flags, pic.Alpha/256.0, pic.Coords, pic.unk, pic.Material, pic.Flags2, *kw)
 		print(repr(p.Name))
 		mat = self.Materials[pic.Material]
 		if mat is not None:
@@ -1186,16 +1198,16 @@ class Brlyt(object):
 		p = 0x1c
 		items = []
 		for i in range(nitems):
-			items.append(data[p:].split(b'\0', 1)[0])
+			items.append(data[p:p+0x10].split(b'\0', 1)[0].decode("ascii"))
 			p += 0x10
 		for i in items:
-			try:
-				if lang != self.Language:
-					self.Objects[i].Enabled = False
-				else:
-					self.Objects[i].Enabled = True
-			except:
-				pass
+			if i not in self.Objects:
+				print("Missing object:", i)
+				continue
+			if lang != self.Language:
+				self.Objects[i].Enabled = False
+			else:
+				self.Objects[i].Enabled = True
 
 class Brlan(object):
 	A_COORD = "RLPA"
@@ -1539,8 +1551,11 @@ class Renderer(object):
 		if not item.Enabled:
 			return
 		if isinstance(item, Picture):
-			
+
 			mat = self.Brlyt.Materials[item.Material]
+			if not mat.Textures:
+				return
+
 			texture = self.Brlyt.Textures[mat.Textures[0][0]].GLTexture
 			mtc = mat.TextureCoords[0]
 			x, y, a, b, c, rot, xsc, ysc, xs, ys = item.Coords[:10]
@@ -1647,6 +1662,9 @@ class Renderer(object):
 		for set in self.Brlan.Anim:
 			for clss in set:
 				for anim in clss:
+					if set.Name not in self.Brlyt.Objects:
+						print("Missing object for animation: %s (%s)" % (set.Name, clss.Type))
+						continue
 					#print(set.Name, clss.Type, anim.Type, anim.calc(frame), frame)
 					if clss.Type == Brlan.A_COORD:
 						self.Brlyt.Objects[set.Name].Coords[anim.Type] = anim.calc(frame)
@@ -1657,7 +1675,8 @@ class Renderer(object):
 	def MainLoop(self, loop):
 		frame = 0
 		print("Starting mainloop: loop =",loop)
-		print("Length in frames:",self.Brlan.Anim.FrameCount)	
+		if self.Brlan:
+			print("Length in frames:",self.Brlan.Anim.FrameCount)	
 		while not self.Window.has_exit:
 			self.Window.dispatch_events()
 			self.Window.clear()
@@ -1732,11 +1751,18 @@ class Alameda(object):
 			banner = U8(IMD5(root.Files['./meta/banner.bin']))
 			renderer.Brlyt = Brlyt(banner, banner.Files['./arc/blyt/banner.brlyt'], renderer)
 			loop = './arc/anim/banner_start.brlan' not in banner.Files
+			loop_anim = None
+
 			if not loop:
 				renderer.Brlan = Brlan(banner.Files['./arc/anim/banner_start.brlan'])
-				loop_anim = Brlan(banner.Files['./arc/anim/banner_loop.brlan'])
+				if './arc/anim/banner_loop.brlan' in banner.Files:
+					loop_anim = Brlan(banner.Files['./arc/anim/banner_loop.brlan'])
 			else:
 				renderer.Brlan = Brlan(banner.Files['./arc/anim/banner.brlan'])
+				if './arc/anim/banner.brlan' in banner.Files:
+					renderer.Brlan = Brlan(banner.Files['./arc/anim/banner.brlan'])
+				else:
+					renderer.Brlan = None
 				
 		if renderer.MainLoop(loop) and type == 'banner' and not loop:
 			renderer.Brlan = loop_anim
