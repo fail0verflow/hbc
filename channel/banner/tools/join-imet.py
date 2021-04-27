@@ -25,7 +25,7 @@ def pad(x,l):
 imet = "\x00"*0x40
 imet += struct.pack(">4sIIIIII","IMET",0x600,3,getsize(iconarc),getsize(bannerarc),getsize(soundbns),1)
 
-for i in ["jp", "en", "de", "fr", "sp", "it", "nl", "cn", None, "ko"]:
+for i in ["jp", "en", "de", "fr", "sp", "it", "nl", "cn", None, "ko", "id"]:
 	try:
 		imet += pad(names[i].encode("UTF-16BE"),0x54)
 	except KeyError:
