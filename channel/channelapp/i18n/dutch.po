@@ -41,7 +41,7 @@ msgstr "Error"
 
 #: source/dialogs.c:59
 msgid "Ok"
-msgstr "OK"
+msgstr "Oké"
 
 #: source/dialogs.c:60
 msgid "Cancel"
@@ -57,11 +57,11 @@ msgstr "Nee"
 
 #: source/dialogs.c:63
 msgid "Delete"
-msgstr "Verwijder"
+msgstr "Wissen"
 
 #: source/dialogs.c:64
 msgid "Load"
-msgstr "Start"
+msgstr "Laden"
 
 #: source/dialogs.c:65 source/m_main.c:95
 msgid "Back"
@@ -77,23 +77,23 @@ msgstr "Apparaat:"
 
 #: source/dialogs.c:68
 msgid "Internal SD Slot"
-msgstr "Intern SD Slot"
+msgstr "Interne SD-ingang"
 
 #: source/dialogs.c:69
 msgid "USB device"
-msgstr "USB apparaat"
+msgstr "USB-apparaat"
 
 #: source/dialogs.c:70
 msgid "SDGecko Slot A"
-msgstr "SDGecko Slot A"
+msgstr "SDGecko-ingang A"
 
 #: source/dialogs.c:71
 msgid "SDGecko Slot B"
-msgstr "SDGecko Slot B"
+msgstr "SDGecko-ingang B"
 
 #: source/dialogs.c:72
 msgid "Sort applications by:"
-msgstr "Sorteer applicaties op:"
+msgstr "Applicaties sorteren op:"
 
 #: source/dialogs.c:73
 msgid "Name"
@@ -105,7 +105,7 @@ msgstr "Datum"
 
 #: source/dialogs.c:110
 msgid "<YourLanguageHere> translation by <YourNickNameHere>"
-msgstr "Nederlandse vertaling door bLAStY en ChronoX"
+msgstr "Nederlandse vertaling door bLAStY, ChronoX en QkeleQ10"
 
 #: source/dialogs.c:115
 msgid "Theme:"
@@ -123,24 +123,23 @@ msgstr "Auteur: %s"
 
 #: source/loader.c:716
 msgid "Error while reading the application from the SD card"
-msgstr ""
-"Er is een fout opgetreden tijdens het lezen van de applicatie van de SD kaart"
+msgstr "Fout bij het lezen van de applicatie van de SD kaart"
 
 #: source/loader.c:717
 msgid "Error while receiving the application"
-msgstr "Er is een fout opgetreden tijdens het ontvangen van de applicatie"
+msgstr "Fout bij het ontvangen van de applicatie"
 
 #: source/loader.c:718
 msgid "Error uncompressing the received data"
-msgstr "Error tijdens het uitpakken van de ontvangen data"
+msgstr "Fout bij het uitpakken van de ontvangen data"
 
 #: source/loader.c:719
 msgid "This is not a valid Wii application"
-msgstr "Dit is geen geldige Wii applicatie"
+msgstr "Dit is geen geldige Wii-applicatie"
 
 #: source/loader.c:720
 msgid "This is not a usable ZIP file"
-msgstr "Dit is geen bruikbaar ZIP bestand"
+msgstr "Dit is geen bruikbaar ZIP-bestand"
 
 #: source/loader.c:721
 msgid "Not enough memory"
@@ -149,7 +148,7 @@ msgstr "Niet genoeg geheugen"
 #: source/loader.c:763
 #, c-format
 msgid "Loading %s"
-msgstr "Bezig met laden van %s"
+msgstr "%s laden"
 
 #: source/loader.c:772
 #, c-format
@@ -167,7 +166,7 @@ msgid ""
 "Extract the received ZIP file?\n"
 "%s of free space are required."
 msgstr ""
-"Pak het ontvangen ZIP bestand uit?\n"
+"Ontvangen ZIP-bestand uitpakken?\n"
 "%s aan vrije ruimte is vereist."
 
 #: source/loader.c:969
@@ -177,16 +176,16 @@ msgstr "WAARSCHUWING: Bestanden in '%s' zullen worden overschreven"
 
 #: source/loader.c:970
 msgid "Error while extracting the ZIP file"
-msgstr "Er is een fout opgetreden tijdens het uitpakken van de ZIP filee"
+msgstr "Fout bij het uitpakken van het ZIP-bestand"
 
 #: source/main.c:250
 msgid "Do you really want to delete this application?"
-msgstr "Wil je echt deze applicatie verwijderen?"
+msgstr "Deze applicatie echt wissen?"
 
 #: source/main.c:251
 #, c-format
 msgid "Error deleting '%s'"
-msgstr "Kon '%s' niet verwijderen"
+msgstr "Fout bij het wissen van '%s'"
 
 #: source/manage.c:518
 msgid "Extracting"
@@ -199,11 +198,11 @@ msgstr "Netwerk niet geïnitialiseerd"
 #: source/m_main.c:81
 #, c-format
 msgid "Your Wii's IP is %u.%u.%u.%u"
-msgstr "IP adres: %u.%u.%u.%u"
+msgstr "Het IP-adres van je Wii is %u.%u.%u.%u"
 
 #: source/m_main.c:97
 msgid "About"
-msgstr "Info"
+msgstr "Over"
 
 #: source/m_main.c:102
 msgid "Launch BootMii"
@@ -211,7 +210,7 @@ msgstr "BootMii starten"
 
 #: source/m_main.c:106
 msgid "Exit to System Menu"
-msgstr "Terug naar System Menu"
+msgstr "Terug naar systeemmenu"
 
 #: source/m_main.c:109
 msgid "Shutdown"
@@ -227,17 +226,17 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Een update voor het Homebrew Kanaal (%s zal de huidige %s vervangen) is "
+"Er is een update voor het Homebrewkanaal (versie %s, huidig %s) "
 "beschikbaar, wil je nu updaten?\n"
 "\n"
-"Release notes:\n"
+"Release-opmerkingen:\n"
 "\n"
 "%s"
 
 #: source/update.c:262
 #, c-format
 msgid "Downloading Update (%u kB)"
-msgstr "Update wordt gedownload (%u kB)"
+msgstr "Update downloaden (%u kB)"
 
 #: source/update.c:304
 msgid "Download failed"
@@ -254,4 +253,4 @@ msgstr "<geen omschrijving>"
 #~ msgstr "Auteur: <onbekend>"
 
 #~ msgid "Deleting"
-#~ msgstr "Verijwderen"
+#~ msgstr "Wissen"
