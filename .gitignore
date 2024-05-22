@@ -6,4 +6,4 @@
 *.dSYM
 *.pyc
 .DS_Store
-
+*.bak

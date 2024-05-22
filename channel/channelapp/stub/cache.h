@@ -299,8 +299,8 @@ u32 LCQueueWait(u32);
 void LCFlushQueue();
 void LCAlloc(void *,u32);
 void LCAllocNoInvalidate(void *,u32);
-void LCAllocOneTag(BOOL,void *);
-void LCAllocTags(BOOL,void *,u32);
+void LCAllocOneTag(bool,void *);
+void LCAllocTags(bool,void *,u32);
 
 #define LCGetBase()		((void*)LC_BASE)
 #ifdef __cplusplus
