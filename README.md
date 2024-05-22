@@ -1,7 +1,8 @@
-# The Homebrew Channel
+# The Homebrew Channel: Rebrewed
 
 This repository contains the public release of the source code for
-The Homebrew Channel.
+The Homebrew Channel: Rebrewed. This is a fork of the original Homebrew Channel
+by fail0verflow with more stuff.
 
 Included portions:
 
@@ -47,7 +48,9 @@ Additionally, you'll need the following packages on your host machine:
 * sox
 
 The build process has only been tested on Linux. You're on your own if you
-want to try building this on OSX or Windows.
+want to try building this on Windows.
+
+* Note: Some libraries use Python 2. They should be ported to Python 3 soon but for now, have Python 2 installed on your system.
 
 You'll need the Wii common key installed as ~/.wii/common-key.
 
