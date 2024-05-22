@@ -9,21 +9,6 @@
 
 #include "font.h"
 
-/*
-* struct mxml_node_s			/**** An XML node. @private@ ****/
-// {
-//   mxml_type_t		type;		/* Node type */
-//   struct mxml_node_s	*next;		/* Next node under same parent */
-//   struct mxml_node_s	*prev;		/* Previous node under same parent */
-//   struct mxml_node_s	*parent;	/* Parent node */
-//   struct mxml_node_s	*child;		/* First child node */
-//   struct mxml_node_s	*last_child;	/* Last child node */
-//   mxml_value_t		value;		/* Node value */
-//   int			ref_count;	/* Use count */
-//   void			*user_data;	/* User data */
-// };
-
-
 #define NO_COLOR 0x0DEADF00
 
 typedef struct {
