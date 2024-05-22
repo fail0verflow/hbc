@@ -32,23 +32,26 @@ static inline char *_xmldup(const char *str) {
 	return pstrdup(str);
 }
 
-static char *_get_cdata(mxml_node_t *node) {
+static char *_get_cdata(struct mxml_node_t *node) {
 	if (!node)
 		return NULL;
 
-	// mxml_node_t *n = node->child;
+	/*
+	'invalid use of incomplete typedef 'mxml_node_t'
+	*/
+	struct mxml_node_t *n = *node->child;
 
-	// while (n) {
-	// 	if (n->type == MXML_OPAQUE)
-	// 		return n->value.opaque;
+	while (n) {
+		if (n->type == MXML_OPAQUE)
+			return n->value.opaque;
 
-	// 	n = mxmlWalkNext(n, node, MXML_NO_DESCEND);
-	// }
+		n = mxmlWalkNext(n, node, MXML_NO_DESCEND);
+	}
 
 	return NULL;
 }
 
-static char *_get_elem_cdata(mxml_node_t *node, const char *element) {
+static char *_get_elem_cdata(mxml_node_t **node, const char *element) {
 	if (!node)
 		return NULL;
 
