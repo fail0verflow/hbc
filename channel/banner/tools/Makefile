@@ -1,6 +1,10 @@
 
 CFLAGS = -O3 -Wall -I/usr/local/include -L/usr/local/lib
 
+ifeq ($(shell uname), Darwin)
+	CFLAGS += -I/opt/homebrew/include -L/opt/homebrew/lib
+endif
+
 CC = $(PREFIX)gcc
 STRIP = $(PREFIX)strip
 
