@@ -291,6 +291,7 @@ void main_real(void) {
 	bool reloced;
 	bool ahb_access;
 	bool launch_bootmii;
+	bool restart;
 
 	u64 frame;
 	bool exit_about;
@@ -333,6 +334,7 @@ void main_real(void) {
 	reloced = false;
 	ahb_access = false;
 	launch_bootmii = false;
+	restart = false;
 
 	frame = 0;
 	exit_about = false;
@@ -434,6 +436,7 @@ void main_real(void) {
 			if (bd & PADS_DOWN)
 				view_set_focus_next (v_current);
 
+			// what to do when a button is pressed
 			if (bd & PADS_A) {
 				switch (v_m_main->focus) {
 				case 0:
@@ -452,16 +455,24 @@ void main_real(void) {
 
 					continue;
 
+				// "Launch BootMii"
 				case 2:
 					launch_bootmii = true;
 					should_exit = true;
 					break;
 
+				// "Exit to System Menu"
 				case 3:
 					should_exit = true;
 					continue;
 
+				// "Reboot"
 				case 4:
+					restart = true;
+					should_exit = true;
+
+				// "Shutdown"
+				case 5:
 					should_exit = true;
 					shutdown = true;
 					break;
@@ -805,6 +816,11 @@ void main_real(void) {
 
 		gprintf ("branching to %p\n", ep);
 		loader_exec (ep);
+	}
+
+	if (restart) {
+		gprintf ("rebooting console\n");
+		STM_RebootSystem();
 	}
 
 	if (shutdown) {

@@ -84,10 +84,11 @@ void m_main_theme_reinit(void) {
 		for (i = 0; i < v_m_main->widget_count; ++i)
 			widget_free(&v_m_main->widgets[i]);
 	
-	if (bootmii_ios)
+	// Chances are BootMii will be installed - otherwise, this will be enough room anyways for a 'Reboot' option.
+	// if (bootmii_ios)
 		yadd = 16;
-	else
-		yadd = 32;
+	// else
+		// yadd = 32;
 
 	x = (view_width - theme_gfx[THEME_BUTTON]->w) / 2;
 	y = 80;
@@ -106,16 +107,19 @@ void m_main_theme_reinit(void) {
 	widget_button (&v_m_main->widgets[3], x, y, 0, BTN_NORMAL, _("Exit to System Menu"));
 	y += theme_gfx[THEME_BUTTON]->h + yadd;
 
-	widget_button (&v_m_main->widgets[4], x, y, 0, BTN_NORMAL, _("Shutdown"));
+	widget_button (&v_m_main->widgets[4], x, y, 0, BTN_NORMAL, _("Reboot"));
+	y += theme_gfx[THEME_BUTTON]->h + yadd;
 
-	widget_label (&v_m_main->widgets[5], view_width / 3 * 2 - 16, 32, 0,
+	widget_button (&v_m_main->widgets[5], x, y, 0, BTN_NORMAL, _("Shutdown"));
+
+	widget_label (&v_m_main->widgets[6], view_width / 3 * 2 - 16, 32, 0,
 				  CHANNEL_VERSION_STR, view_width / 3 - 32, FA_RIGHT,
 				  FA_ASCENDER, FONT_LABEL);
 
 	sprintf(buffer, "IOS%d v%d.%d", IOS_GetVersion(), IOS_GetRevisionMajor(),
 			IOS_GetRevisionMinor());
 
-	widget_label (&v_m_main->widgets[6], view_width / 3 * 2 - 16,
+	widget_label (&v_m_main->widgets[7], view_width / 3 * 2 - 16,
 				  32 + font_get_y_spacing(FONT_LABEL), 0, buffer,
 				  view_width / 3 - 32, FA_RIGHT, FA_ASCENDER, FONT_LABEL);
 
