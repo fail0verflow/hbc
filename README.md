@@ -21,8 +21,7 @@ the official version of The Homebrew Channel, which includes additional
 protection features (i.e. we had to add reverse-DRM to stop scammers from
 selling it).
 
-This code is released with no warranty, and hasn't even been tested on a real
-Wii, only under Dolphin (yes, this release runs under Dolphin).
+This code is released with no warranty.
 
 ## Build instructions
 
