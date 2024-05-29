@@ -37,7 +37,8 @@ typedef enum {
 
 typedef enum {
 	APP_SORT_NAME = 0,
-	APP_SORT_DATE
+	APP_SORT_DATE,
+	APP_SORT_AUTHOR
 } app_sort;
 
 extern const char *app_path;

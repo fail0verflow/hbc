@@ -49,9 +49,11 @@ static int device_active = -1;
 static int device_prefered = -1;
 static app_filter current_filter = APP_FILTER_ALL;
 static app_sort current_sort = APP_SORT_NAME;
+static bool cmp_author = false;
 static bool cmp_descending = false;
 static bool cmp_release_date = false;
 
+// app sorting: comparison function
 static int cmp_app_entry (const void *p1, const void *p2) {
 	const app_entry *a1;
 	const app_entry *a2;
@@ -87,6 +89,12 @@ static int cmp_app_entry (const void *p1, const void *p2) {
 			return 1;
 
 		return -1;
+	}
+
+	if (cmp_author) {
+		if(a1->meta->coder && a2->meta->coder) {
+			return strcasecmp (a1->meta->coder, a2->meta->coder);
+		}
 	}
 
 	if (!a1->meta->name && !a2->meta->name)
@@ -143,15 +151,26 @@ app_sort app_entry_get_sort(void) {
 }
 
 void app_entry_set_sort(app_sort sort) {
+	// TODO: Cleanup here - if we are comparing one thing we shouldn't need to modify fields that are most of the time set to false anyways
 	switch (sort) {
 	case APP_SORT_DATE:
+		cmp_author = false;
 		cmp_descending = true;
 		cmp_release_date = true;
 		current_filter = APP_FILTER_DATEONLY;
 		current_sort = APP_SORT_DATE;
 		break;
 
+	case APP_SORT_AUTHOR:
+		cmp_author = true;
+		cmp_descending = false;
+		cmp_release_date = false;
+		current_filter = APP_FILTER_ALL;
+		current_sort = APP_SORT_AUTHOR;
+		break;
+
 	default:
+		cmp_author = false;
 		cmp_descending = false;
 		cmp_release_date = false;
 		current_filter = APP_FILTER_ALL;

@@ -39,6 +39,7 @@ static const char *caption_device_names[DEVICE_COUNT];
 static const char *caption_sort_by;
 static const char *caption_sort_name;
 static const char *caption_sort_date;
+static const char *caption_sort_author;
 
 static const char *l_version;
 static const char *l_coder;
@@ -72,6 +73,7 @@ void dialogs_theme_reinit (void) {
 	caption_sort_by = _("Sort applications by:");
 	caption_sort_name = _("Name");
 	caption_sort_date = _("Date");
+	caption_sort_author = _("Author");
 
 	string_about_pre =
 		"Credits\n\n"
@@ -198,7 +200,8 @@ view * dialog_app (const app_entry *entry, const view *sub_view) {
 	else
 		desc = app_entry_desc_default;
 
-	v = view_new (11, sub_view, (view_width - theme_gfx[THEME_DIALOG]->w) / 2,
+	// TODO: Better ways of handling when we need to add more widgets
+	v = view_new (12, sub_view, (view_width - theme_gfx[THEME_DIALOG]->w) / 2,
 					44, TEX_LAYER_DIALOGS, PADS_B);
 
 	widget_image(&v->widgets[0], 0, 0, 0, theme_gfx[THEME_DIALOG],
@@ -477,7 +480,7 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 
 	app_entry_poll_status(true);
 
-	v = view_new (12, sub_view, (view_width - theme_gfx[THEME_DIALOG]->w) / 2,
+	v = view_new (13, sub_view, (view_width - theme_gfx[THEME_DIALOG]->w) / 2,
 					44, TEX_LAYER_DIALOGS, PADS_B);
 
 	widget_image (&v->widgets[0], 0, 0, 0, theme_gfx[THEME_DIALOG],
@@ -495,8 +498,9 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 	widget_button (&v->widgets[6], 52, 128, 1, BTN_SMALL, NULL);
 	widget_button (&v->widgets[7], 268, 128, 1, BTN_SMALL, NULL);
 
-	widget_button (&v->widgets[8], 52, 216, 1, BTN_SMALL, NULL);
-	widget_button (&v->widgets[9], 268, 216, 1, BTN_SMALL, NULL);
+	widget_button (&v->widgets[8], 52, 216, 1, BTN_TINY, NULL);
+	widget_button (&v->widgets[9], 186, 216, 1, BTN_TINY, NULL);
+	widget_button (&v->widgets[12], 320, 216, 1, BTN_TINY, NULL);
 
 	widget_button (&v->widgets[10], 32,
 					theme_gfx[THEME_DIALOG]->h -
@@ -528,17 +532,34 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 		widget_set_flag (&v->widgets[DLG_DEV_FIRST + i], WF_ENABLED, status[i]);
 	}
 
+	// TODO: set all captions to desel by default?
 	if (ret.sort == APP_SORT_DATE) {
 		widget_button_set_caption(&v->widgets[8],
 									FONT_BUTTON_DESEL,
 									caption_sort_name);
+		widget_button_set_caption(&v->widgets[12],
+									FONT_BUTTON_DESEL,
+									caption_sort_author);
 		widget_button_set_caption(&v->widgets[9],
 									FONT_BUTTON,
+									caption_sort_date);
+	} else if (ret.sort == APP_SORT_AUTHOR) {
+		widget_button_set_caption(&v->widgets[8],
+									FONT_BUTTON_DESEL,
+									caption_sort_name);
+		widget_button_set_caption(&v->widgets[12],
+									FONT_BUTTON,
+									caption_sort_author);
+		widget_button_set_caption(&v->widgets[9],
+									FONT_BUTTON_DESEL,
 									caption_sort_date);
 	} else {
 		widget_button_set_caption(&v->widgets[8],
 									FONT_BUTTON,
 									caption_sort_name);
+		widget_button_set_caption(&v->widgets[12],
+									FONT_BUTTON_DESEL,
+									caption_sort_author);
 		widget_button_set_caption(&v->widgets[9],
 									FONT_BUTTON_DESEL,
 									caption_sort_date);
@@ -590,6 +611,9 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 				widget_button_set_caption(&v->widgets[8],
 											FONT_BUTTON,
 											caption_sort_name);
+				widget_button_set_caption(&v->widgets[12],
+											FONT_BUTTON_DESEL,
+											caption_sort_author);
 				widget_button_set_caption(&v->widgets[9],
 											FONT_BUTTON_DESEL,
 											caption_sort_date);
@@ -598,8 +622,22 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 				widget_button_set_caption(&v->widgets[8],
 											FONT_BUTTON_DESEL,
 											caption_sort_name);
+				widget_button_set_caption(&v->widgets[12],
+											FONT_BUTTON_DESEL,
+											caption_sort_author);
 				widget_button_set_caption(&v->widgets[9],
 											FONT_BUTTON,
+											caption_sort_date);
+			} else if (v->focus == 12) {
+				ret.sort = APP_SORT_AUTHOR;
+				widget_button_set_caption(&v->widgets[8],
+											FONT_BUTTON_DESEL,
+											caption_sort_name);
+				widget_button_set_caption(&v->widgets[12],
+											FONT_BUTTON,
+											caption_sort_author);
+				widget_button_set_caption(&v->widgets[9],
+											FONT_BUTTON_DESEL,
 											caption_sort_date);
 			} else if ((v->focus == 10) || (v->focus == 11)) {
 				break;
