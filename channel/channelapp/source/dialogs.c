@@ -532,37 +532,36 @@ dialog_options_result show_options_dialog(const view *sub_view) {
 		widget_set_flag (&v->widgets[DLG_DEV_FIRST + i], WF_ENABLED, status[i]);
 	}
 
-	// TODO: set all captions to desel by default?
-	if (ret.sort == APP_SORT_DATE) {
-		widget_button_set_caption(&v->widgets[8],
+	// By default, show all the sorting options widgets as not active
+	widget_button_set_caption(&v->widgets[8],
 									FONT_BUTTON_DESEL,
 									caption_sort_name);
-		widget_button_set_caption(&v->widgets[12],
+	widget_button_set_caption(&v->widgets[12],
 									FONT_BUTTON_DESEL,
 									caption_sort_author);
-		widget_button_set_caption(&v->widgets[9],
-									FONT_BUTTON,
-									caption_sort_date);
-	} else if (ret.sort == APP_SORT_AUTHOR) {
-		widget_button_set_caption(&v->widgets[8],
-									FONT_BUTTON_DESEL,
-									caption_sort_name);
-		widget_button_set_caption(&v->widgets[12],
-									FONT_BUTTON,
-									caption_sort_author);
-		widget_button_set_caption(&v->widgets[9],
+	widget_button_set_caption(&v->widgets[9],
 									FONT_BUTTON_DESEL,
 									caption_sort_date);
-	} else {
-		widget_button_set_caption(&v->widgets[8],
+
+	// Only set the widget of the active sort to show different
+	switch (ret.sort) {
+		case APP_SORT_NAME:
+			widget_button_set_caption(&v->widgets[8],
 									FONT_BUTTON,
 									caption_sort_name);
-		widget_button_set_caption(&v->widgets[12],
-									FONT_BUTTON_DESEL,
-									caption_sort_author);
-		widget_button_set_caption(&v->widgets[9],
-									FONT_BUTTON_DESEL,
+			break;
+
+		case APP_SORT_DATE:
+			widget_button_set_caption(&v->widgets[9],
+									FONT_BUTTON,
 									caption_sort_date);
+			break;
+
+		case APP_SORT_AUTHOR:
+			widget_button_set_caption(&v->widgets[12],
+									FONT_BUTTON,
+									caption_sort_author);
+			break;		
 	}
 
 	view_set_focus (v, 11);
