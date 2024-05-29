@@ -17,6 +17,7 @@ static view *v_m_main;
 
 static const char *text_no_ip;
 static const char *text_has_ip;
+static const char *text_number_apps;
 
 static bool bootmii_ios = false;
 
@@ -79,6 +80,7 @@ void m_main_theme_reinit(void) {
 
 	text_no_ip = _("Network not initialized");
 	text_has_ip = _("Your Wii's IP is %u.%u.%u.%u");
+	text_number_apps = _("Number of apps installed - %d");
 
 	if (inited_widgets)
 		for (i = 0; i < v_m_main->widget_count; ++i)
@@ -129,6 +131,7 @@ void m_main_theme_reinit(void) {
 void m_main_update (void) {
 	u32 ip;
 	char buffer[64];
+	char buffer2[64];
 
 	if (loader_tcp_initialized ()) {
 		ip = net_gethostip ();
@@ -141,5 +144,10 @@ void m_main_update (void) {
 					  view_width / 3 * 2 - 32, FA_LEFT, FA_ASCENDER, FONT_LABEL);
 	}
 
+	sprintf (buffer2, text_number_apps, entry_count);
+	widget_label (&v_m_main->widgets[7], 48, 32, 0, buffer2,
+					  view_width / 3 * 2 - 48, FA_LEFT, FA_ASCENDER, FONT_LABEL);
+	
+	
 }
 
