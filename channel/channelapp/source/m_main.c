@@ -10,6 +10,7 @@
 #include "loader.h"
 #include "i18n.h"
 #include "panic.h"
+#include "title.h"
 
 #include "m_main.h"
 
@@ -20,6 +21,7 @@ static const char *text_has_ip;
 static const char *text_number_apps;
 
 static bool bootmii_ios = false;
+static bool vwii = false;
 
 static bool bootmii_is_installed(u64 title_id) {
 	u32 tmd_view_size;
@@ -56,6 +58,7 @@ static bool inited_widgets = false;
 
 view * m_main_init (void) {
 	bootmii_ios = bootmii_is_installed(TITLEID_BOOTMII);
+	vwii = is_vwii();
 
 	v_m_main = view_new (8, NULL, 0, 0, 0, 0);
 
@@ -85,12 +88,11 @@ void m_main_theme_reinit(void) {
 	if (inited_widgets)
 		for (i = 0; i < v_m_main->widget_count; ++i)
 			widget_free(&v_m_main->widgets[i]);
-	
-	// Chances are BootMii will be installed - otherwise, this will be enough room anyways for a 'Reboot' option.
-	// if (bootmii_ios)
+
+	if (bootmii_ios || vwii)
 		yadd = 16;
-	// else
-		// yadd = 32;
+	else
+		yadd = 32;
 
 	x = (view_width - theme_gfx[THEME_BUTTON]->w) / 2;
 	y = 80;
@@ -106,11 +108,15 @@ void m_main_theme_reinit(void) {
 		y += theme_gfx[THEME_BUTTON]->h + yadd;
 	}
 
-	widget_button (&v_m_main->widgets[3], x, y, 0, BTN_NORMAL, _("Exit to System Menu"));
-	y += theme_gfx[THEME_BUTTON]->h + yadd;
+	if (vwii) {
+	   widget_button (&v_m_main->widgets[3], x, y, 0, BTN_NORMAL, _("Exit to vWii System Menu"));
+	   y += theme_gfx[THEME_BUTTON]->h + yadd;
 
-	widget_button (&v_m_main->widgets[4], x, y, 0, BTN_NORMAL, _("Reboot"));
-	y += theme_gfx[THEME_BUTTON]->h + yadd;
+	   widget_button (&v_m_main->widgets[4], x, y, 0, BTN_NORMAL, _("Reboot to Wii U Menu"));
+	} else {
+	   widget_button (&v_m_main->widgets[3], x, y, 0, BTN_NORMAL, _("Exit to System Menu"));
+	}
+	y += theme_gfx[THEME_BUTTON]->h + yadd;  // the widget will always be added
 
 	widget_button (&v_m_main->widgets[5], x, y, 0, BTN_NORMAL, _("Shutdown"));
 
@@ -147,7 +153,6 @@ void m_main_update (void) {
 	sprintf (buffer2, text_number_apps, entry_count);
 	widget_label (&v_m_main->widgets[7], 48, 32, 0, buffer2,
 					  view_width / 3 * 2 - 48, FA_LEFT, FA_ASCENDER, FONT_LABEL);
-	
-	
-}
 
+
+}
