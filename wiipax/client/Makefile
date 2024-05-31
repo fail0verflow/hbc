@@ -1,4 +1,4 @@
-CFLAGS = -Wall -W -Os -g
+CFLAGS = -Wall -W -Os -g -flto
 TARGET = wiipax
 OBJS = LzFind.o LzmaEnc.o LzmaDec.o lzma.o main.o
 OBJS += stub_mini.o stub_mini_debug.o
@@ -11,4 +11,3 @@ include ../../common.mk
 
 install: all
 	install -m 755 $(TARGET) $(WIIDEV)/bin
-

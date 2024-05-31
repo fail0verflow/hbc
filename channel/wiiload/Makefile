@@ -1,4 +1,4 @@
-CFLAGS += -Wall -Wextra -Os -g -pipe
+CFLAGS += -Wall -Wextra -Os -g -pipe -flto
 
 ifeq ($(WIN32), 1)
 PREFIX ?= i586-mingw32msvc-
@@ -50,4 +50,3 @@ osx:
 	$(MAKE) clean
 	/opt/toolchains/i686-apple-darwin9-10.4/bin/i686-apple-darwin9-lipo -create $(BIN)_ppc $(BIN)_intel -output $(BIN)
 	rm $(BIN)_ppc $(BIN)_intel
-

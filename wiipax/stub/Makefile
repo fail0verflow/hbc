@@ -1,7 +1,7 @@
 include ../../broadway.mk
 
 CFLAGS += -mno-eabi -mno-sdata -O2 -ffreestanding
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -flto
 DEFINES =
 LDFLAGS += -nostartfiles -nodefaultlibs
 
@@ -63,4 +63,3 @@ release:
 	$(Q)$(MAKE) DKPPCCHANNEL=1 NDEBUG=1 clean
 
 .PHONY: release
-
