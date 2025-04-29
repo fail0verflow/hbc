@@ -47,7 +47,12 @@ over time. This is equivalent to opening up a copy of The Lord of the Rings, pul
 meticulously re-typing the whole story in different words, with different names for the characters, while
 preserving the entirety of the plot. Unfortunately for shagkur and the other libogc authors, this is still
 plagiarism and copyright infringement. It doesn't matter that they didn't literally Ctrl-C and Ctrl-V the
-entirety of RTEMS. The end result is, very clearly, still plagiarized.
+entirety of RTEMS. The end result is, very clearly, still plagiarized. (The author of the above blog post
+is wrong about the language translation example; a 1:1 translation of a project into another programming
+language would absolutely be considered a derivative work, just like a translation of a novel into another
+human language would be. Otherwise what libogc did with Nintendo SDK code would be legal and non-infringing,
+since it is a manual translation from assembly to C. It is widely understood and accepted in the development
+community that this kind of action does not erase copyright and creates a derivative work.)
 
 Feel free to check out another example: 
 [this RTEMS function](https://github.com/atgreen/RTEMS/blob/2f200c7e642c214accb7cc6bd7f0f1784deec833/c/src/exec/score/src/thread.c#L1141)
@@ -66,10 +71,19 @@ open source code, and the mere action of doing so erases its original copyright.
 WinterMute is also is not innocent, and not just by virtue of being complicit with shagkur and enabling his
 plagiarism behavior. He, himself, was previously
 [caught](https://github.com/devkitPro/libnds/commit/426a369220dcb43320e203f9087de74e43452d84#diff-f376c160388ca187fe35e962eb047fe606338869b515128a6257d3a7a6694ff0R17-R25)
-referencing the official Nintendo DS ("nitro") SDK while writing code for libnds. WinterMute has a huge
+referencing the official Nintendo DS ("nitro") SDK while writing code for libnds\*. WinterMute has a huge
 siege mentality issue when it comes to DevkitPro, which is why nobody has been able to get through to him,
 as any criticism of his work or the way he manages his project has always been met with extreme hostility.
 This is why nothing has ever been done about these issues with the project, even after all these years.
+
+\* Edited to note: This should not be taken to imply that any or all of libnds itself is tainted with SDK
+code. The commit in question itself only adds fairly standard cache maintenance functions, and is not itself
+evidence that there was substantial copying. It just reflects poorly on WinterMute that he was referencing
+the leaked SDK, especially for something as trivial as this. For a more thorough take on the general
+mismanagement of the devkitPro project as a whole, please read
+[this](https://heyquark.com/brew/2020/07/13/leaving-devkitpro/) blog post. The stories told there track
+very closely with our experience with that team way back in the Wii days, and it seems nothing has changed
+nor improved after all these years.
 
 # The Homebrew Channel
 
