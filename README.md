@@ -15,6 +15,17 @@ but identical). There are also bits of documentation copied from Nintendo SDK do
 at least significant parts of libogc, such as its threading implementation, were original, and reluctantly
 continued to use the project while distancing ourselves from it.
 
+Had we known the extent to which libogc was tainted when we first bootstrapped the Wii homebrew community
+with the release of the Twilight Hack and other tools, we would never have condoned the use of devkitPro and
+libogc, and we would have committed to developing an alternate library without copyright infringement issues.
+However, this fact was hidden from us at the time, as the devkitPro and libogc developers always presented
+their offerings as completely free of any copyright problems, and these issues were not publicly documented
+despite libogc existing long before the release of the Wii, as a GameCube development library. By the time
+the truth became known to us, the Wii homebrew ecosystem was already established and locked into libogc.
+This was particularly insidious, as it is precisely those *without* access to or no intent to reference the
+leaked Nintendo SDK that were deceived; those *with* a copy of the leaked SDK and eager to browse its
+documentation and headers could quickly see the extent of the copying, but were unlikely to raise the alarm.
+
 It has recently been revealed that the threading/OS implementation in libogc is, in fact,
 [stolen from RTEMS](https://github.com/derek57/libogc). The authors of libogc didn't just steal proprietary
 Nintendo code, but also saw it fit to steal an *open source* RTOS and remove all attribution and copyright
