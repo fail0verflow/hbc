@@ -4,9 +4,16 @@ This repository is archived and will not accept any further contributions.
 
 Like most Wii homebrew software, this software depends on [libogc](https://github.com/devkitPro/libogc).
 After development of The Homebrew Channel had already started, we discovered that large portions of libogc
-were stolen directly from the Nintendo SDK or games using the Nintendo SDK (decompiled and cleaned up).
-We thought that at least significant parts of libogc, such as its threading implementation, were original,
-and reluctantly continued to use the project while distancing ourselves from it.
+were stolen directly from the Nintendo SDK (decompiled and cleaned up), including portions directly copied
+and pasted from SDK header files (One example:
+[libogc](https://github.com/devkitPro/libogc/blob/52c525a13fd1762c10395c78875e3260f94368b5/libogc/video.c#L91),
+[Nintendo SDK](https://github.com/RenaKunisaki/SFA-Amethyst/blob/7844a5fe15485bf79fe672ef7d47f44d76b98b0f/include/gc/revolution/gx/GXFrameBuffer.h#L220),
+but there are many others and casually browsing the headers will show that the vast majority of APIs are all
+but identical). There are also bits of documentation copied from Nintendo SDK documentation, as well as
+[executable binaries](https://github.com/devkitPro/libogc/blob/52c525a13fd1762c10395c78875e3260f94368b5/libogc/card.c#L129)
+(disguised by being called "data" in the identifier) that are copied verbatim from the SDK. We thought that
+at least significant parts of libogc, such as its threading implementation, were original, and reluctantly
+continued to use the project while distancing ourselves from it.
 
 It has recently been revealed that the threading/OS implementation in libogc is, in fact,
 [stolen from RTEMS](https://github.com/derek57/libogc). The authors of libogc didn't just steal proprietary
