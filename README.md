@@ -18,6 +18,8 @@ The current developers of libogc are [not interested](https://github.com/devkitP
 tracking this issue, finding a solution, nor informing the community of the problematic copyright status of
 the project. When we filed an issue about it, they immediately closed it, replied with verbal abuse, and then
 completely deleted it from public view.
+[Another issue pointing out explicit Nintendo SDK code theft evidence](https://github.com/devkitPro/libogc/issues/204)
+filed by another person has also been immediately closed and locked.
 
 For this reason, we consider it impossible to legally and legitimately compile this software at this point,
 and cannot encourage any further development.
