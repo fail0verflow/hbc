@@ -55,11 +55,10 @@ since it is a manual translation from assembly to C. It is widely understood and
 community that this kind of action does not erase copyright and creates a derivative work.)
 
 Feel free to check out another example: 
-[this RTEMS function](https://github.com/atgreen/RTEMS/blob/2f200c7e642c214accb7cc6bd7f0f1784deec833/c/src/exec/score/src/thread.c#L1141)
+[this RTEMS function](https://github.com/atgreen/RTEMS/blob/f926b34f663debae055330a9e54ee71fc1f65d12/c/src/exec/score/src/thread.c#L1218)
 is 1:1 identical to
 [this libogc function](https://github.com/devkitPro/libogc/blob/52c525a13fd1762c10395c78875e3260f94368b5/libogc/lwp_threads.c#L388),
-other than slightly renamed identifiers, different code formatting, and the `prependit` parameter in the
-libogc version and `if` branch (which does seem to be a novel addition). It would be clear in any court of
+other than slightly renamed identifiers and different code formatting. It would be clear in any court of
 law that this constitutes copyright infringement, regardless of whether it was achieved in one shot or
 incrementally over time. It is simply not possible for this kind of non-trivial code to wind up completely
 identical like this, purely on accident. This kind of conduct is, in fact, the same conduct that led libogc
