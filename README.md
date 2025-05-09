@@ -1,5 +1,7 @@
 # ARCHIVED
 
+**Update**: [Statement from RTEMS](https://www.rtems.org/news/2025-05-06-rtems-devkit-libogc-response/)
+
 This repository is archived and will not accept any further contributions.
 
 Like most Wii homebrew software, this software depends on [libogc](https://github.com/devkitPro/libogc).
